@@ -86,8 +86,8 @@ def main():
     # Initialize pygame                                 
     pygame.init()
     # Load in the background image
-    world = pygame.image.load("Bed_Room.png")
-    #Big_rect = world.get_rect()
+    world = pygame.image.load("Rooms_Will Asseble/Bed_Room.png")
+    Big_rect = world.get_rect()
 
     # Store window width and height in different forms for easy access
     world_size = world.get_size()
@@ -241,7 +241,7 @@ def main():
 
         frame_count += 1
 
-        #Map 2
+        #Map 1
         screen.blit(world, world_rect)
 
         # 60 fps
