@@ -91,10 +91,13 @@ def main():
 
     # Store window width and height in different forms for easy access
     world_size = world.get_size()
+    #print(world_size)
+    Wsize_x,Wsize_y = (world_size)
     
 
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
+    #print(world_rect)
     
     # create the window the same size as the map image
     screen = pygame.display.set_mode(world_size)
@@ -177,30 +180,31 @@ def main():
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             is_facing_right = False
-            screen_x += -speed
+            screen_x += speed
         if keys[pygame.K_RIGHT]:
             is_facing_right = True
-            screen_x += speed
+            screen_x += -speed
         if keys[pygame.K_UP]:
-            screen_y += -speed
-        if keys[pygame.K_DOWN]:
             screen_y += speed
-
+        if keys[pygame.K_DOWN]:
+            screen_y += -speed
+        #print("Screen_X: ",screen_x,"Screen_y: ",screen_y)
         # Clamp the screen offsets to allowable values
-        screen_x = clamp(0, screen_x, ((world.get_width() - 1) - (map_tile_width - 1)) * tile_size + tile_size-1)
-        screen_y = clamp(0, screen_y, ((world.get_height() - 1) - (map_tile_height - 1)) * tile_size + tile_size-1)
+        
+ #       screen_x = clamp(0, screen_x, ((world.get_width() - 1) - (map_tile_width - 1)) * tile_size + tile_size-1)
+ #       screen_y = clamp(0, screen_y, ((world.get_height() - 1) - (map_tile_height - 1)) * tile_size + tile_size-1)
 
         # scale down from position on the big map to pixel on the minimap
         minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
         
         # Draw the map
-        for y in range(0,map_tile_height):
+        #for y in range(0,map_tile_height):
             # offset y
-            y_index = y + minimap_offset_y
-            for x in range(0, map_tile_width):
-                # offset x
-                x_index = x + minimap_offset_x
-                pixelColor = world.get_at((x_index,y_index))
+#            y_index = y + minimap_offset_y
+#            for x in range(0, map_tile_width):
+#                # offset x
+#                x_index = x + minimap_offset_x
+#                pixelColor = world.get_at((x_index,y_index))
              # Colors in pygame are not really tuples but we can force it to be a tuple.
                 # Draw the tile that corresponds to the pixel color we found.
                 #screen.blit(screen[tuple(pixelColor)], world_rect)
@@ -222,12 +226,17 @@ def main():
             character_data["ghost"][VISIBLE] = False;
             say_phrases.append((character_data["ghost"][PHRASE], frame_count + 150))
             game_state["got ghost"] = True # Not really used in the starter code
-            
+
+        #print("before change: Hero_rect.x:",hero_rect[0], "  Hero_rect.y:",hero_rect[1])
+ #       hero_rect.center = (screen_x/2, screen_y/2)
+        #print("after change: Hero_rect.x:",hero_rect[0], "  Hero_rect.y:",hero_rect[1])
+        #print(hero_rect.center)
+           
         # The hero stays in the center of the screen
         hero_sprite = hero[frame_count%len(hero)]
         if is_facing_right:
+            #print("is_facing_right")
             hero_sprite = pygame.transform.flip(hero_sprite, True, False)
-        screen.blit(hero[frame_number%len(hero)], hero_rect)
 
         fps = clock.get_fps()
         # Render text to the screen
@@ -241,8 +250,13 @@ def main():
 
         frame_count += 1
 
+        world_rect[0] = screen_x/2 - 600
+        world_rect[1] = screen_y/2 - 600
+
         #Map 1
         screen.blit(world, world_rect)
+        #print("last",world, world_rect)
+        screen.blit(hero[frame_number%len(hero)], hero_rect)
 
         # 60 fps
         clock.tick(60)
