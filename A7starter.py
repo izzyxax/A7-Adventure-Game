@@ -94,12 +94,9 @@ def main():
     # Initialize pygame                                 
     pygame.init()
 
-    
-    
     #MUSIC
 #    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
 #    pygame.mixer.music.play(-1)
-    
     
     # Load in the background image
     world = pygame.image.load("Rooms_Will Asseble/Rooms.png")
@@ -192,10 +189,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 playing = False
-    
+                
         # Set the speed of the hero, which is the speed the screen corner moves.
         speed = 10
 
+    if hero_rect.collider!= barrier
         # Allow continuous motion on a held-down key
         keys = pygame.key.get_pressed()
 
@@ -218,7 +216,6 @@ def main():
 
         # scale down from position on the big map to pixel on the minimap
         minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
-
 
 
 
@@ -267,13 +264,17 @@ def main():
         pygame.display.update()
 
         frame_count += 1
+<<<<<<< HEAD
 
+=======
+>>>>>>> ad10abfd1e96b3b73ede1a404e3f7dc08269af93
         
         #This keeps pikachu in the middle
         world_rect[0] = screen_x/2 - 900
         world_rect[1] = screen_y/2 - 500
         
         screen.fill((0,0,0))
+<<<<<<< HEAD
 
 
         world_rect[0] = screen_x/2 - 600
@@ -282,6 +283,8 @@ def main():
         background = (0,0,0)
         screen.fill(background)
 
+=======
+>>>>>>> ad10abfd1e96b3b73ede1a404e3f7dc08269af93
         #Map 1
         screen.blit(world, world_rect)
         #print("last",world, world_rect)
