@@ -5,7 +5,7 @@ Zach Mills and Isabella Perrino
 
 Game: Get Out
 A plan for the adventure. This should be a short written (and printed) document like:
-1) Hero is locked in his room and progresses to them become locked out of his house and also his garage door is locked
+1) Hero is locked in his room and progresses to each room then becomes locked out of his house and also his garage door is locked
 2) Uses keys he finds a long the way to open locked doors
 3) And the ultimate challenge is finding the code to the safe in the garage to get out of his house cus his house is locked 
    from the inside.
