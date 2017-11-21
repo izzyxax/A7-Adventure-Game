@@ -56,7 +56,7 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
 
 #RGB VALUES: These values corrilate to the borders for the wall and certain objects the player cannot pass or touch
 wall = (158,158,158)#Through out the home
-door = (77,,58,52) #Will make multiple doors just in case for event of passing through or not
+door = (77,58,52) #Will make multiple doors just in case for event of passing through or not
 #Bedroom
 desk_chair = (99,99,99)
 desk = (82,67,52)
@@ -76,18 +76,15 @@ stool = (153,110,75)
 
 
 
-
 # The main loop handles most of the game    
 def main():
-    #MUSIC
-    pygame.mixer.music.load('POL-aquatic-circus-short.wav')
-    pygame.mixer.music.play(-1)
+    
 
     frame_number = 0
     # Initialize pygame                                 
     pygame.init()
     # Load in the background image
-    world = pygame.image.load("Rooms_Will Asseble/Bed_Room.png")
+    world = pygame.image.load("Rooms_Will Asseble/Rooms.png")
     Big_rect = world.get_rect()
 
     # Store window width and height in different forms for easy access
@@ -107,6 +104,10 @@ def main():
     map_tile_height = 20
     tile_size = 32
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
+
+    #Music Loading
+    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
+    pygame.mixer.music.play(-1)
     
     # Get a font
     myfont = pygame.font.SysFont("monospace", 24)
