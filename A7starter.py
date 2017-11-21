@@ -23,6 +23,32 @@ def load_piskell_sprite(sprite_folder_name, number_of_frames):
                              
     return frame_counts
 
+
+def wall_barriers():
+    #RGB VALUES: These values corrilate to the borders for the wall and certain objects the player cannot pass or touch
+    
+
+    #Dictionary of multiple barries for easy access
+    barriers = {}
+    barriers[(158,158,158)] = wall#Through out the home
+    barriers[(77,58,52)] =  door#Will make multiple doors just in case for event of passing through or not
+    #Bedroom
+    barriers[(99,99,99)] = chair
+    barriers[(82,67,52)] = desk
+    barriers[(33,54,69)] = bed
+    barriers[(130,109,88)] =bed_frame
+    #Kitchen
+    barriers[(77,73,71)] = counter
+    barriers[(158,138,120)] = can
+    barriers[(168,167,165)] = fridge
+    barriers[(189,188,187)] = sink
+    barriers[(64,57,51)] = kitchen_furniture
+    barriers[(153,110,75)] = stool
+    #Living Room
+
+
+    return (barriers, barriers_rect)
+
 # Clamp the value parameter to be on the range from min_allowed to max_allowed.
 # The clamped value is returned, while the original value is not changed.
 def clamp(min_allowed, value, max_allowed):
@@ -53,23 +79,6 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
             label = myfont.render(say_phrases[index][0], True, (255,255,0))
             screen.blit(label, (screen.get_width()//2 - 100, phrase_position))
             phrase_position += 20
-
-#RGB VALUES: These values corrilate to the borders for the wall and certain objects the player cannot pass or touch
-wall = (158,158,158)#Through out the home
-door = (77,58,52) #Will make multiple doors just in case for event of passing through or not
-#Bedroom
-desk_chair = (99,99,99)
-desk = (82,67,52)
-blanket = (33,54,69)
-bed_frame = (130,109,88)
-#Kitchen
-counter = (77,73,71)
-can = (158,138,120)
-fridge = (168,167,165)
-sink = (189,188,187)
-table_chair_drawer = (64,57,51)
-stool = (153,110,75)
-#Living Room
 
 
 
@@ -179,10 +188,6 @@ def main():
 
     # Loop while the player is still active
     while playing:
-<<<<<<< HEAD
-=======
-                  
->>>>>>> ccdf31e5e528f3ddafdd9da3ab9ac4a88f309766
         # Check events by looping over the list of events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -193,6 +198,8 @@ def main():
 
         # Allow continuous motion on a held-down key
         keys = pygame.key.get_pressed()
+
+        #INSERT IVISIBLE WALL HERE/ For Loop
         if keys[pygame.K_LEFT]:
             is_facing_right = False
             screen_x += speed
@@ -214,7 +221,7 @@ def main():
 
 
 
-#INSERT IVISIBLE WALL HERE
+
 
 
 
@@ -260,21 +267,21 @@ def main():
         pygame.display.update()
 
         frame_count += 1
-<<<<<<< HEAD
+
         
         #This keeps pikachu in the middle
         world_rect[0] = screen_x/2 - 900
         world_rect[1] = screen_y/2 - 500
         
         screen.fill((0,0,0))
-=======
+
 
         world_rect[0] = screen_x/2 - 600
         world_rect[1] = screen_y/2 - 600
         #Background
         background = (0,0,0)
         screen.fill(background)
->>>>>>> ccdf31e5e528f3ddafdd9da3ab9ac4a88f309766
+
         #Map 1
         screen.blit(world, world_rect)
         #print("last",world, world_rect)
