@@ -85,9 +85,12 @@ def main():
     # Initialize pygame                                 
     pygame.init()
 
+    
+    
     #MUSIC
     pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
     pygame.mixer.music.play(-1)
+    
     
     # Load in the background image
     world = pygame.image.load("Rooms_Will Asseble/Rooms.png")
@@ -176,12 +179,12 @@ def main():
 
     # Loop while the player is still active
     while playing:
-          
+                  
         # Check events by looping over the list of events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 playing = False
-
+    
         # Set the speed of the hero, which is the speed the screen corner moves.
         speed = 10
 
@@ -254,11 +257,12 @@ def main():
         pygame.display.update()
 
         frame_count += 1
-        
-        #This keeps pikachu in the middle
+
         world_rect[0] = screen_x/2 - 600
         world_rect[1] = screen_y/2 - 600
-
+        #Background
+        background = (0,0,0)
+        screen.fill(background)
         #Map 1
         screen.blit(world, world_rect)
         #print("last",world, world_rect)
