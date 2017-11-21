@@ -1,0 +1,37 @@
+Zach Mills and Isabella Perrino
+
+Art: Isabella 
+Coding:Zach and Isabella
+Music: Is From Stardew Valley with the music "Fall(Raven's Descent)" 
+	This music is NOT ours but is used in this since it has a nice tune to fit the scene
+	AND WILL NOT use it for comercial uses but for this class (educational purposes) only. 
+
+
+
+Game: Get Out
+A plan for the adventure. This should be a short written (and printed) document like:
+1) Hero is locked in his room and progresses to each room then becomes locked out of his house and also his garage door is locked
+2) Uses keys he finds a long the way to open locked doors
+3) And the ultimate challenge is finding the code to the safe in the garage to get out of his house cus his house is locked 
+   from the inside.
+4)And he wins for escaping his house.
+
+
+Grabbing all the rgb values of each object that is not passible and the walls.
+Understanding:
+	-The main function of def main:
+		-Is that basic function of the game funtioning
+	-getting events from pygame so that the:
+		-characters movement
+		-load screen
+		-quiting game
+		works since its an event that happens when a specific key or click happens
+	-Getting the image to show
+	-bliting the sprite/image/written variables to show
+	-updating after everything has been coded
+
+Suggestions from the TAs/Professor
+	- Constructing the mini-map with a single image instead of tiles.
+Some evidence of working on and understanding the code. 
+You should implement the terrain-based speed control requirement. You can use the existing tiles at this point or have your own.
+We will ask a few basic questions about the structure of the example code and your modifications to it.

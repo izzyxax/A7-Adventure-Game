@@ -23,32 +23,6 @@ def load_piskell_sprite(sprite_folder_name, number_of_frames):
                              
     return frame_counts
 
-# This loads known images that correspond to tile types. It then puts those tiles
-# in a dictionary with the minimap pixel color as a key - those key colors are also
-# preset. A more general function would take a list of color, filename tuples and
-# make the dictionary, but then calling the function would be as long as this function.
-
-##def load_tiles_and_make_dict_and_rect():
-##    # Load the tiles
-##    sand = pygame.image.load("images/Sand.png").convert_alpha() # (206, 206, 46, 255)
-##    tile_rect = sand.get_rect()
-##    plains = pygame.image.load("images/Plains.png").convert_alpha() # (126, 206, 46, 255)
-##    swamp = pygame.image.load("images/Swamp.png").convert_alpha() # (14,64,14,255)
-##    dirt = pygame.image.load("images/Dirt.png").convert_alpha() # (117,94,21,255)
-##    water = pygame.image.load("images/water2.png").convert_alpha() # (0, 176, 255, 255)
-##    rocks = pygame.image.load("images/Rocky.png").convert_alpha() # (39, 39, 21, 255)
-##
-##    # Make a dictionary of the tiles for easy access
-##    tiles = {}
-##    tiles[(206, 206, 46, 255)] = sand
-##    tiles[(126, 206, 46, 255)] = plains
-##    tiles[(39, 39, 21, 255)] = rocks
-##    tiles[(0, 176, 255, 255)] = water
-##    tiles[(117,94,21,255)] = dirt
-##    tiles[(14,64,14,255)] = swamp
-##
-##    return (tiles, tile_rect)
-
 # Clamp the value parameter to be on the range from min_allowed to max_allowed.
 # The clamped value is returned, while the original value is not changed.
 def clamp(min_allowed, value, max_allowed):
@@ -80,13 +54,37 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
             screen.blit(label, (screen.get_width()//2 - 100, phrase_position))
             phrase_position += 20
 
+#RGB VALUES: These values corrilate to the borders for the wall and certain objects the player cannot pass or touch
+wall = (158,158,158)#Through out the home
+door = (77,58,52) #Will make multiple doors just in case for event of passing through or not
+#Bedroom
+desk_chair = (99,99,99)
+desk = (82,67,52)
+blanket = (33,54,69)
+bed_frame = (130,109,88)
+#Kitchen
+counter = (77,73,71)
+can = (158,138,120)
+fridge = (168,167,165)
+sink = (189,188,187)
+table_chair_drawer = (64,57,51)
+stool = (153,110,75)
+#Living Room
+
+
+
+
+
+
 # The main loop handles most of the game    
 def main():
+    
+
     frame_number = 0
     # Initialize pygame                                 
     pygame.init()
     # Load in the background image
-    world = pygame.image.load("Rooms_Will Asseble/Bed_Room.png")
+    world = pygame.image.load("Rooms_Will Asseble/Rooms.png")
     Big_rect = world.get_rect()
 
     # Store window width and height in different forms for easy access
@@ -106,6 +104,10 @@ def main():
     map_tile_height = 20
     tile_size = 32
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
+
+    #Music Loading
+    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
+    pygame.mixer.music.play(-1)
     
     # Get a font
     myfont = pygame.font.SysFont("monospace", 24)
@@ -122,7 +124,9 @@ def main():
     # add in a ghost character
     ghost_image = pygame.image.load("images/pacman_ghost.png").convert_alpha()
     ghost_rect = ghost_image.get_rect()
-    ghost_pos = (1700,1200)
+    ghost_pos = (500,500)
+
+
     # This is our standard character data - it is a dictionary of
     # an {IMAGE, RECT, POSITION, VISIBLE, optional PHRASE}. The ALL CAPS keys are defined at
     # the top of this file. They are really numbers. Words make more sense to read but I get
@@ -136,6 +140,7 @@ def main():
     treasure_image = pygame.image.load("images/treasurechest.png").convert_alpha()
     # Note that we can add characters to the character dictionary without making a lot of variables
     character_data["treasure"] = {IMAGE:treasure_image, RECT:treasure_image.get_rect(), POSITION:(1000, 500), VISIBLE:False, PHRASE:"Spend your coin wisely!"}
+
 
     # Add a place to hold screen phrases
     say_phrases = []
@@ -165,6 +170,8 @@ def main():
     # Define where the hero is positioned on the big map
     screen_x, screen_y = (1200,1200)
 
+    
+
     # Loop while the player is still active
     while playing:
           
@@ -174,7 +181,7 @@ def main():
                 playing = False
 
         # Set the speed of the hero, which is the speed the screen corner moves.
-        speed = 15
+        speed = 10
 
         # Allow continuous motion on a held-down key
         keys = pygame.key.get_pressed()
@@ -196,21 +203,17 @@ def main():
 
         # scale down from position on the big map to pixel on the minimap
         minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
+
+
+
+#INSERT IVISIBLE WALL HERE
+
+
+
+
+
+
         
-        # Draw the map
-        #for y in range(0,map_tile_height):
-            # offset y
-#            y_index = y + minimap_offset_y
-#            for x in range(0, map_tile_width):
-#                # offset x
-#                x_index = x + minimap_offset_x
-#                pixelColor = world.get_at((x_index,y_index))
-             # Colors in pygame are not really tuples but we can force it to be a tuple.
-                # Draw the tile that corresponds to the pixel color we found.
-                #screen.blit(screen[tuple(pixelColor)], world_rect)
-
-        # Draw items. They move with the map.
-
         # The ghost moves across the map by adding 1 to the x coordinate. Since POSITION is a tuple, we
         # cannot modify just the x coordinate, we need to rebuild the tuple.
         character_data["ghost"][POSITION] = (character_data["ghost"][POSITION][0] + 1, character_data["ghost"][POSITION][1])
