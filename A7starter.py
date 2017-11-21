@@ -254,7 +254,8 @@ def main():
         pygame.display.update()
 
         frame_count += 1
-
+        
+        #This keeps pikachu in the middle
         world_rect[0] = screen_x/2 - 600
         world_rect[1] = screen_y/2 - 600
 

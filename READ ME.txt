@@ -22,7 +22,7 @@ Understanding:
 	-The main function of def main:
 		-Is that basic function of the game funtioning
 	-getting events from pygame so that the:
-		-characters moement
+		-characters movement
 		-load screen
 		-quiting game
 		works since its an event that happens when a specific key or click happens
@@ -31,6 +31,7 @@ Understanding:
 	-updating after everything has been coded
 
 Suggestions from the TAs/Professor
+	- Constructing the mini-map with a single image instead of tiles.
 Some evidence of working on and understanding the code. 
 You should implement the terrain-based speed control requirement. You can use the existing tiles at this point or have your own.
 We will ask a few basic questions about the structure of the example code and your modifications to it.
