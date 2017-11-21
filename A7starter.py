@@ -76,6 +76,7 @@ stool = (153,110,75)
 
 
 
+
 # The main loop handles most of the game    
 def main():
     
@@ -83,6 +84,11 @@ def main():
     frame_number = 0
     # Initialize pygame                                 
     pygame.init()
+
+    #MUSIC
+    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
+    pygame.mixer.music.play(-1)
+    
     # Load in the background image
     world = pygame.image.load("Rooms_Will Asseble/Rooms.png")
     Big_rect = world.get_rect()
@@ -104,10 +110,6 @@ def main():
     map_tile_height = 20
     tile_size = 32
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
-
-    #Music Loading
-    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
-    pygame.mixer.music.play(-1)
     
     # Get a font
     myfont = pygame.font.SysFont("monospace", 24)
