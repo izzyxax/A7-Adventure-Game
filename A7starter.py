@@ -86,8 +86,8 @@ def main():
     pygame.init()
 
     #MUSIC
-    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
-    pygame.mixer.music.play(-1)
+#    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
+#    pygame.mixer.music.play(-1)
     
     # Load in the background image
     world = pygame.image.load("Rooms_Will Asseble/Rooms.png")
@@ -176,7 +176,6 @@ def main():
 
     # Loop while the player is still active
     while playing:
-          
         # Check events by looping over the list of events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -197,9 +196,9 @@ def main():
             screen_y += speed
         if keys[pygame.K_DOWN]:
             screen_y += -speed
+            
         #print("Screen_X: ",screen_x,"Screen_y: ",screen_y)
         # Clamp the screen offsets to allowable values
-        
  #       screen_x = clamp(0, screen_x, ((world.get_width() - 1) - (map_tile_width - 1)) * tile_size + tile_size-1)
  #       screen_y = clamp(0, screen_y, ((world.get_height() - 1) - (map_tile_height - 1)) * tile_size + tile_size-1)
 
@@ -256,13 +255,15 @@ def main():
         frame_count += 1
         
         #This keeps pikachu in the middle
-        world_rect[0] = screen_x/2 - 600
-        world_rect[1] = screen_y/2 - 600
-
+        world_rect[0] = screen_x/2 - 900
+        world_rect[1] = screen_y/2 - 500
+        
+        screen.fill((0,0,0))
         #Map 1
         screen.blit(world, world_rect)
         #print("last",world, world_rect)
         screen.blit(hero[frame_number%len(hero)], hero_rect)
+        
 
         # 60 fps
         clock.tick(60)
