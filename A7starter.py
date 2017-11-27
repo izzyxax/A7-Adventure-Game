@@ -80,13 +80,13 @@ def main():
     # Store window width and height in different forms for easy access
     world_size = world.get_size()
     #print(world_size)
-    Wsize_x,Wsize_y = (world_size)
+    screen_x,screen_y = (world_size)
     
 
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
     #print(world_rect)
-    
+
     # create the window the same size as the map image
     screen = pygame.display.set_mode(world_size)
 
@@ -102,9 +102,12 @@ def main():
     # We treat the hero differently than all the other sprite characters as it doesn't move
     hero = load_piskell_sprite("Items/Hero",12)
     hero_rect = hero[0].get_rect()
+    print(hero_rect)
     
     # Place the hero at the center of the screen
     hero_rect.center = (width/2, height/2)
+    print(screen_x/2, screen_y/2)
+    #print(hero_rect.center)
 
     # Put all the characters in a dictionary so we can pass to functions easily
     character_data = {}
@@ -157,7 +160,7 @@ def main():
     game_state["Safe is open!"] = False
 
     # Define where the hero is positioned on the big map
-    screen_x, screen_y = (1200,1200)
+    #screen_x, screen_y = (1200,1200)
 
     
     
@@ -169,10 +172,15 @@ def main():
                 playing = False
                 
         # Set the speed of the hero, which is the speed the screen corner moves.
-        speed = 10
-
+        speed = 1
+        
         colliding = world.get_at(hero_rect.center)
-        #print(colliding)
+        #position = hero_rect.get_offset
+        #print("world: ", world)
+        print("hero_rect.center: " , hero_rect.center)
+        #print("Color: ",colliding)
+        #print("Pos: ",position)
+        
         #print(barriers)
         for colors in barriers:
             #print(colors)
@@ -196,7 +204,7 @@ def main():
                     screen_y += speed
                 if keys[pygame.K_DOWN]:
                     screen_y += -speed
-        #This keeps pikachu in the middle
+        #This keeps character in the middle
         world_rect[0] = screen_x/2 - 900
         world_rect[1] = screen_y/2 - 500
                
@@ -240,6 +248,7 @@ def main():
         screen.blit(world, world_rect)
         #print("last",world, world_rect)
         screen.blit(hero[frame_number%len(hero)], hero_rect)
+        print("hero_rect.center: ", hero_rect.center)
             
 
         # 60 fps
