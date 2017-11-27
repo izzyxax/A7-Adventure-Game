@@ -54,23 +54,26 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
             screen.blit(label, (screen.get_width()//2 - 100, phrase_position))
             phrase_position += 20
 
-#RGB VALUES: These values corrilate to the borders for the wall and certain objects the player cannot pass or touch
-wall = (158,158,158)#Through out the home
-door = (77,58,52) #Will make multiple doors just in case for event of passing through or not
-#Bedroom
-desk_chair = (99,99,99)
-desk = (82,67,52)
-blanket = (33,54,69)
-bed_frame = (130,109,88)
-#Kitchen
-counter = (77,73,71)
-can = (158,138,120)
-fridge = (168,167,165)
-sink = (189,188,187)
-table_chair_drawer = (64,57,51)
-stool = (153,110,75)
-#Living Room
+###RGB VALUES: These values corrilate to the borders for the wall and certain objects the player cannot pass or touch
+##wall = (158,158,158)#Through out the home
+##door = (77,58,52) #Will make multiple doors just in case for event of passing through or not
+###Bedroom
+##desk_chair = (99,99,99)
+##desk = (82,67,52)
+##blanket = (33,54,69)
+##bed_frame = (130,109,88)
+###Kitchen
+##counter = (77,73,71)
+##can = (158,138,120)
+##fridge = (168,167,165)
+##sink = (189,188,187)
+##table_chair_drawer = (64,57,51)
+##stool = (153,110,75)
+###Living Room
 
+barriers = {"wall": (158,158,158), "door": (77,58,52),"desk_chair": (99,99,99),"desk": (82,67,52),
+            "blanket": (33,54,69),"bed_frame": (130,109,88),"counter": (77,73,71),"can": (158,138,120),
+            "fridge" :(168,167,165),"sink":(189,188,187),"table_chair_drawer":(64,57,51),"stool": (153,110,75)}
 
 
 
@@ -183,21 +186,25 @@ def main():
                 
         # Set the speed of the hero, which is the speed the screen corner moves.
         speed = 10
-
-    if hero_rect.collider!= barrier
+        
+    #Allows player to move if not colliding with Barrier colors
+    #print(barriers)
+    for colors in barriers:
+        #print(colors)
+        if hero_rect.colliderect!= colors:
         # Allow continuous motion on a held-down key
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            is_facing_right = False
-            screen_x += speed
-        if keys[pygame.K_RIGHT]:
-            is_facing_right = True
-            screen_x += -speed
-        if keys[pygame.K_UP]:
-            screen_y += speed
-        if keys[pygame.K_DOWN]:
-            screen_y += -speed
-            
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_LEFT]:
+                is_facing_right = False
+                screen_x += speed
+            if keys[pygame.K_RIGHT]:
+                is_facing_right = True
+                screen_x += -speed
+            if keys[pygame.K_UP]:
+                screen_y += speed
+            if keys[pygame.K_DOWN]:
+                screen_y += -speed
+                
         #print("Screen_X: ",screen_x,"Screen_y: ",screen_y)
         # Clamp the screen offsets to allowable values
  #       screen_x = clamp(0, screen_x, ((world.get_width() - 1) - (map_tile_width - 1)) * tile_size + tile_size-1)
