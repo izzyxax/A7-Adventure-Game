@@ -73,7 +73,7 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
 
 barriers = {"wall": (158,158,158), "door": (77,58,52),"desk_chair": (99,99,99),"desk": (82,67,52),
             "blanket": (33,54,69),"bed_frame": (130,109,88),"counter": (77,73,71),"can": (158,138,120),
-            "fridge" :(168,167,165),"sink":(189,188,187),"table_chair_drawer":(64,57,51),"stool": (153,110,75)}
+            "fridge" :(168,167,165),"sink":(189,188,187),"table_chair_drawer":(64,57,51),"stool": (153,110,75), "Testing Wall":(184,158,136,225)}
 
 
 
@@ -121,25 +121,19 @@ def main():
     # We treat the hero differently than all the other sprite characters as it doesn't move
     hero = load_piskell_sprite("images/hero",21)
     hero_rect = hero[0].get_rect()
+    
     # Place the hero at the center of the screen
     hero_rect.center = (width/2, height/2)
 
     # Put all the characters in a dictionary so we can pass to functions easily
     character_data = {}
-    # add in a ghost character
-    ghost_image = pygame.image.load("images/pacman_ghost.png").convert_alpha()
-    ghost_rect = ghost_image.get_rect()
-    ghost_pos = (500,500)
-
 
     # This is our standard character data - it is a dictionary of
     # an {IMAGE, RECT, POSITION, VISIBLE, optional PHRASE}. The ALL CAPS keys are defined at
     # the top of this file. They are really numbers. Words make more sense to read but I get
     # frustrated having to put quotes around the words. So the variables act as the word and the
     # value in the variable acts as the key.
-    ghost = {IMAGE:ghost_image, RECT:ghost_rect, POSITION:ghost_pos, VISIBLE:True, PHRASE:"You got me!"}
-    # Add the ghost list to the character dictionary.    
-    character_data["ghost"] = ghost
+
 
     # add in a treasure item
     treasure_image = pygame.image.load("images/treasurechest.png").convert_alpha()
@@ -168,10 +162,6 @@ def main():
     # Need to set all state variables here so that they are in the dictionary
     game_state["got ghost"] = False
 
-##    # Load the minimap that defines the world.
-##    world = pygame.image.load("images/testMap2.png").convert_alpha()
-##    world_rect = world.get_rect()
-
     # Define where the hero is positioned on the big map
     screen_x, screen_y = (1200,1200)
 
@@ -188,11 +178,8 @@ def main():
         speed = 10
 
         colliding = world.get_at(hero_rect.center)
-        #print(colliding)
-        
-        #Allows player to move if not colliding with Barrier colors
+        print(colliding)
         #print(barriers)
-        
         for colors in barriers:
             #print(colors)
             if colliding != barriers[colors]:
@@ -204,6 +191,7 @@ def main():
                     for colors in barriers:
                         hero_x, hero_y = hero_rect.center
                         if world.get_at((hero_x + speed, hero_y)) == barriers[colors]:
+                            print("pass_check False")
                             pass_check = False
                     if pass_check == True:
                         screen_x += speed

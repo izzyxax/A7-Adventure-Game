@@ -73,7 +73,7 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
 
 barriers = {"wall": (158,158,158), "door": (77,58,52),"desk_chair": (99,99,99),"desk": (82,67,52),
             "blanket": (33,54,69),"bed_frame": (130,109,88),"counter": (77,73,71),"can": (158,138,120),
-            "fridge" :(168,167,165),"sink":(189,188,187),"table_chair_drawer":(64,57,51),"stool": (153,110,75)}
+            "fridge" :(168,167,165),"sink":(189,188,187),"table_chair_drawer":(64,57,51),"stool": (153,110,75), "Testing Wall":(184,158,136,225)}
 
 
 
@@ -121,25 +121,19 @@ def main():
     # We treat the hero differently than all the other sprite characters as it doesn't move
     hero = load_piskell_sprite("images/hero",21)
     hero_rect = hero[0].get_rect()
+    
     # Place the hero at the center of the screen
     hero_rect.center = (width/2, height/2)
 
     # Put all the characters in a dictionary so we can pass to functions easily
     character_data = {}
-    # add in a ghost character
-    ghost_image = pygame.image.load("images/pacman_ghost.png").convert_alpha()
-    ghost_rect = ghost_image.get_rect()
-    ghost_pos = (500,500)
-
 
     # This is our standard character data - it is a dictionary of
     # an {IMAGE, RECT, POSITION, VISIBLE, optional PHRASE}. The ALL CAPS keys are defined at
     # the top of this file. They are really numbers. Words make more sense to read but I get
     # frustrated having to put quotes around the words. So the variables act as the word and the
     # value in the variable acts as the key.
-    ghost = {IMAGE:ghost_image, RECT:ghost_rect, POSITION:ghost_pos, VISIBLE:True, PHRASE:"You got me!"}
-    # Add the ghost list to the character dictionary.    
-    character_data["ghost"] = ghost
+
 
     # add in a treasure item
     treasure_image = pygame.image.load("images/treasurechest.png").convert_alpha()
@@ -168,10 +162,6 @@ def main():
     # Need to set all state variables here so that they are in the dictionary
     game_state["got ghost"] = False
 
-##    # Load the minimap that defines the world.
-##    world = pygame.image.load("images/testMap2.png").convert_alpha()
-##    world_rect = world.get_rect()
-
     # Define where the hero is positioned on the big map
     screen_x, screen_y = (1200,1200)
 
@@ -188,11 +178,8 @@ def main():
         speed = 10
 
         colliding = world.get_at(hero_rect.center)
-        #print(colliding)
-        
-        #Allows player to move if not colliding with Barrier colors
+        print(colliding)
         #print(barriers)
-        
         for colors in barriers:
             #print(colors)
             if colliding != barriers[colors]:
@@ -204,6 +191,7 @@ def main():
                     for colors in barriers:
                         hero_x, hero_y = hero_rect.center
                         if world.get_at((hero_x + speed, hero_y)) == barriers[colors]:
+                            print("pass_check False")
                             pass_check = False
                     if pass_check == True:
                         screen_x += speed
@@ -214,46 +202,14 @@ def main():
                     screen_y += speed
                 if keys[pygame.K_DOWN]:
                     screen_y += -speed
-                    
-            #print("Screen_X: ",screen_x,"Screen_y: ",screen_y)
-            # Clamp the screen offsets to allowable values
-     #       screen_x = clamp(0, screen_x, ((world.get_width() - 1) - (map_tile_width - 1)) * tile_size + tile_size-1)
-     #       screen_y = clamp(0, screen_y, ((world.get_height() - 1) - (map_tile_height - 1)) * tile_size + tile_size-1)
 
-            # scale down from position on the big map to pixel on the minimap
-            minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
-
-
-
-
-
-
-            
-            # The ghost moves across the map by adding 1 to the x coordinate. Since POSITION is a tuple, we
-            # cannot modify just the x coordinate, we need to rebuild the tuple.
-            character_data["ghost"][POSITION] = (character_data["ghost"][POSITION][0] + 1, character_data["ghost"][POSITION][1])
-            # The ghost rectangle has to be shifted from the big map to the screen by offsetting by the screen corner.
-            # This shifted rectangle is also how the hero might interact with the ghost since we care about
-            # where they are on screen relative to each other.
-            character_data["ghost"][RECT].center = (character_data["ghost"][POSITION][0] - screen_x, character_data["ghost"][POSITION][1] - screen_y)
-            if character_data["ghost"][VISIBLE]:
-                screen.blit(character_data["ghost"][IMAGE], character_data["ghost"][RECT])
-
-            # interact with ghost
-            if character_data["ghost"][VISIBLE] and hero_rect.colliderect(character_data["ghost"][RECT]):
-                character_data["ghost"][VISIBLE] = False;
-                say_phrases.append((character_data["ghost"][PHRASE], frame_count + 150))
-                game_state["got ghost"] = True # Not really used in the starter code
-
-            #print("before change: Hero_rect.x:",hero_rect[0], "  Hero_rect.y:",hero_rect[1])
-     #       hero_rect.center = (screen_x/2, screen_y/2)
-            #print("after change: Hero_rect.x:",hero_rect[0], "  Hero_rect.y:",hero_rect[1])
-            #print(hero_rect.center)
+            #This keeps pikachu in the middle
+            world_rect[0] = screen_x/2 - 900
+            world_rect[1] = screen_y/2 - 500
                
             # The hero stays in the center of the screen
             hero_sprite = hero[frame_count%len(hero)]
             if is_facing_right:
-                #print("is_facing_right")
                 hero_sprite = pygame.transform.flip(hero_sprite, True, False)
 
             fps = clock.get_fps()
@@ -267,10 +223,6 @@ def main():
             pygame.display.update()
 
             frame_count += 1
-            
-            #This keeps pikachu in the middle
-            world_rect[0] = screen_x/2 - 900
-            world_rect[1] = screen_y/2 - 500
             
             screen.fill((0,0,0))
             #Map 1
