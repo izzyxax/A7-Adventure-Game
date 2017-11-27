@@ -85,8 +85,13 @@ def main():
 
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
+<<<<<<< HEAD
     #print(world_rect)
 
+=======
+    print(world_rect)
+    
+>>>>>>> 940078c106e3f86bca555860a11f9736cc850a11
     # create the window the same size as the map image
     screen = pygame.display.set_mode(world_size)
 
@@ -94,6 +99,7 @@ def main():
     map_tile_height = 20
     tile_size = 32
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
+    print(screen_size)
     
     # Get a font
     myfont = pygame.font.SysFont("monospace", 24)
@@ -115,12 +121,9 @@ def main():
     # Add All Characters
 
     #Safe
-    safe_image = pygame.image.load("Items/Safe.png")
-    safe_rect = safe_image.get_rect()
-    safe_pos = (800,800)
-
-    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the key to the Front Door!"}
-    character_data["safe"] = safe
+    safe_image = pygame.image.load("Items/Safe.png").convert_alpha()
+    character_data["safe"] = {IMAGE:safe_image, RECT:safe_image.get_rect(), POSITION:(1000, 1000), VISIBLE:True, PHRASE:"Spend your coin wisely!"}
+   
     
 
 
@@ -173,7 +176,11 @@ def main():
                 
         # Set the speed of the hero, which is the speed the screen corner moves.
         speed = 1
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 940078c106e3f86bca555860a11f9736cc850a11
         colliding = world.get_at(hero_rect.center)
         #position = hero_rect.get_offset
         #print("world: ", world)
@@ -226,11 +233,11 @@ def main():
         # cannot modify just the x coordinate, we need to rebuild the tuple.
         
         #Safe
-        character_data["safe"][POSITION] = (character_data["safe"][POSITION][0] + 1, character_data["safe"][POSITION][1])
-        character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
+        #character_data["safe"][POSITION] = (character_data["safe"][POSITION])
+        #character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
+
         if character_data["safe"][VISIBLE]:
             screen.blit(character_data["safe"][IMAGE], character_data["safe"][RECT])
-
         # interact with ghost
         if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
             character_data["safe"][VISIBLE] = False;
