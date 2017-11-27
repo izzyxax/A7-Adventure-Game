@@ -119,10 +119,6 @@ def main():
     safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the key to the Front Door!"}
     character_data["safe"] = safe
     
-    ghost_image = pygame.image.load("images/pacman_ghost.png").convert_alpha()
-    ghost_rect = ghost_image.get_rect()
-    ghost_pos = (500,500)
-
 
 
     # This is our standard character data - it is a dictionary of
@@ -130,13 +126,6 @@ def main():
     # the top of this file. They are really numbers. Words make more sense to read but I get
     # frustrated having to put quotes around the words. So the variables act as the word and the
     # value in the variable acts as the key.
-
-
-    ghost = {IMAGE:ghost_image, RECT:ghost_rect, POSITION:ghost_pos, VISIBLE:True, PHRASE:"You got me!"}
-
-    # Add the ghost list to the character dictionary.    
-
-    character_data["ghost"] = ghost
 
     # add in a treasure item
     #treasure_image = pygame.image.load("images/treasurechest.png").convert_alpha()
@@ -183,7 +172,7 @@ def main():
         speed = 10
 
         colliding = world.get_at(hero_rect.center)
-        print(colliding)
+        #print(colliding)
         #print(barriers)
         for colors in barriers:
             #print(colors)
@@ -207,28 +196,27 @@ def main():
                     screen_y += speed
                 if keys[pygame.K_DOWN]:
                     screen_y += -speed
-
-            #This keeps pikachu in the middle
-            world_rect[0] = screen_x/2 - 900
-            world_rect[1] = screen_y/2 - 500
+        #This keeps pikachu in the middle
+        world_rect[0] = screen_x/2 - 900
+        world_rect[1] = screen_y/2 - 500
                
-            # The hero stays in the center of the screen
-            hero_sprite = hero[frame_count%len(hero)]
-            if is_facing_right:
-                hero_sprite = pygame.transform.flip(hero_sprite, True, False)
-
-            fps = clock.get_fps()
-            # Render text to the screen
-            label = myfont.render("FPS:" + str(int(fps)), True, (255,255,0))
-            screen.blit(label, (20,20))
+        # The hero stays in the center of the screen
+        hero_sprite = hero[frame_count%len(hero)]
+        if is_facing_right:
+            hero_sprite = pygame.transform.flip(hero_sprite, True, False)
+        
+        fps = clock.get_fps()
+        # Render text to the screen
+        label = myfont.render("FPS:" + str(int(fps)), True, (255,255,0))
+        screen.blit(label, (20,20))
             
-            render_phrases(say_phrases, frame_count, screen, myfont)
+        render_phrases(say_phrases, frame_count, screen, myfont)
 
 
         
         # The ghost moves across the map by adding 1 to the x coordinate. Since POSITION is a tuple, we
         # cannot modify just the x coordinate, we need to rebuild the tuple.
-
+        
         #Safe
         character_data["safe"][POSITION] = (character_data["safe"][POSITION][0] + 1, character_data["safe"][POSITION][1])
         character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
@@ -240,29 +228,22 @@ def main():
             character_data["safe"][VISIBLE] = False;
             say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
             game_state["Safe is open!"] = True # Not really used in the starter code
-        character_data["ghost"][POSITION] = (character_data["ghost"][POSITION][0] + 1, character_data["ghost"][POSITION][1])
-        # The ghost rectangle has to be shifted from the big map to the screen by offsetting by the screen corner.
-        # This shifted rectangle is also how the hero might interact with the ghost since we care about
-        # where they are on screen relative to each other.
-        character_data["ghost"][RECT].center = (character_data["ghost"][POSITION][0] - screen_x, character_data["ghost"][POSITION][1] - screen_y)
-        if character_data["ghost"][VISIBLE]:
-            screen.blit(character_data["ghost"][IMAGE], character_data["ghost"][RECT])
 
-            # Bring drawn changes to the front
-            pygame.display.update()
+        # Bring drawn changes to the front
+        pygame.display.update()
 
 
-            frame_count += 1
+        frame_count += 1
             
-            screen.fill((0,0,0))
-            #Map 1
-            screen.blit(world, world_rect)
-            #print("last",world, world_rect)
-            screen.blit(hero[frame_number%len(hero)], hero_rect)
+        screen.fill((0,0,0))
+        #Map 1
+        screen.blit(world, world_rect)
+        #print("last",world, world_rect)
+        screen.blit(hero[frame_number%len(hero)], hero_rect)
             
 
-            # 60 fps
-            clock.tick(60)
+        # 60 fps
+        clock.tick(60)
 
     # loop is over    
     pygame.quit()
