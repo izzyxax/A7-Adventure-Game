@@ -53,7 +53,7 @@ def wall_barriers():
     barriers[(110,111,94)] = cabbinet
     barriers[(45,45,45)] = car
     barriers[(184,219,221)] = outside
-    barriers[(71,69,68)] = garage door
+    barriers[(71,69,68)] = garage_door
 
 
     return (barriers, barriers_rect)
@@ -103,17 +103,6 @@ def main():
     # Initialize pygame                                 
     pygame.init()
 
-#Keys
-    key1 = True #Key in Bedroom to open the Door to the Kitchen
-    key2 = True #Key in Living room to open garage door
-    House_key = False #Turn True once safe is open and then safe would be false
-#Safe
-    safe = True #Turn False so the safe dissappears if the code to safe is set false then this safe will turn fasle and set House_Key true so it
-
-
-
-
-    
     
     #MUSIC Works on PC but not mac
     pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
@@ -121,7 +110,7 @@ def main():
     
     
     # Load in the background image
-    world = pygame.image.load("Rooms_Will Asseble/Rooms.png")
+    world = pygame.image.load("Rooms/Rooms.png")
     Big_rect = world.get_rect()
 
     # Store window width and height in different forms for easy access
@@ -147,14 +136,29 @@ def main():
 
     # create the hero character
     # We treat the hero differently than all the other sprite characters as it doesn't move
-    hero = load_piskell_sprite("images/hero",21)
+    hero = load_piskell_sprite("Items/Hero",12)
     hero_rect = hero[0].get_rect()
     # Place the hero at the center of the screen
     hero_rect.center = (width/2, height/2)
 
     # Put all the characters in a dictionary so we can pass to functions easily
     character_data = {}
-    # add in a ghost character
+    # Add All Characters
+
+    #Safe
+    safe_image = pygame.image.load("Items/Safe.png")
+    safe_rect = safe_image.get_rect()
+    safe_pos = (800,800)
+
+    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the key to the Front Door!"}
+    character_data["safe"] = safe
+    
+
+
+
+
+
+
     ghost_image = pygame.image.load("images/pacman_ghost.png").convert_alpha()
     ghost_rect = ghost_image.get_rect()
     ghost_pos = (500,500)
@@ -165,14 +169,17 @@ def main():
     # the top of this file. They are really numbers. Words make more sense to read but I get
     # frustrated having to put quotes around the words. So the variables act as the word and the
     # value in the variable acts as the key.
+
     ghost = {IMAGE:ghost_image, RECT:ghost_rect, POSITION:ghost_pos, VISIBLE:True, PHRASE:"You got me!"}
+
     # Add the ghost list to the character dictionary.    
+
     character_data["ghost"] = ghost
 
     # add in a treasure item
-    treasure_image = pygame.image.load("images/treasurechest.png").convert_alpha()
+    #treasure_image = pygame.image.load("images/treasurechest.png").convert_alpha()
     # Note that we can add characters to the character dictionary without making a lot of variables
-    character_data["treasure"] = {IMAGE:treasure_image, RECT:treasure_image.get_rect(), POSITION:(1000, 500), VISIBLE:False, PHRASE:"Spend your coin wisely!"}
+    #character_data["treasure"] = {IMAGE:treasure_image, RECT:treasure_image.get_rect(), POSITION:(1000, 500), VISIBLE:False, PHRASE:"Spend your coin wisely!"}
 
 
     # Add a place to hold screen phrases
@@ -189,12 +196,14 @@ def main():
 
     # variable to show which way I am moving
     is_facing_right = True # False means left
-
+    is_faceing_up = True #False means down
+    
     # capture ghost variable
     game_state = {}
     
     # Need to set all state variables here so that they are in the dictionary
     game_state["got ghost"] = False
+    game_state["Safe is open!"] = False
 
 ##    # Load the minimap that defines the world.
 ##    world = pygame.image.load("images/testMap2.png").convert_alpha()
@@ -250,6 +259,26 @@ def main():
         
         # The ghost moves across the map by adding 1 to the x coordinate. Since POSITION is a tuple, we
         # cannot modify just the x coordinate, we need to rebuild the tuple.
+
+        #Safe
+        character_data["safe"][POSITION] = (character_data["safe"][POSITION][0] + 1, character_data["safe"][POSITION][1])
+        character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
+        if character_data["safe"][VISIBLE]:
+            screen.blit(character_data["safe"][IMAGE], character_data["safe"][RECT])
+
+        # interact with ghost
+        if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
+            character_data["safe"][VISIBLE] = False;
+            say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
+            game_state["Safe is open!"] = True # Not really used in the starter code
+
+
+
+
+
+
+
+
         character_data["ghost"][POSITION] = (character_data["ghost"][POSITION][0] + 1, character_data["ghost"][POSITION][1])
         # The ghost rectangle has to be shifted from the big map to the screen by offsetting by the screen corner.
         # This shifted rectangle is also how the hero might interact with the ghost since we care about
