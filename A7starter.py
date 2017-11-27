@@ -45,6 +45,15 @@ def wall_barriers():
     barriers[(64,57,51)] = kitchen_furniture
     barriers[(153,110,75)] = stool
     #Living Room
+    barriers[(155,128,103)] = tables
+    barriers[(92,119,136)] = sitting
+    barriers[(156,54,57)] = throw
+    barriers[(142,137,126)] = door
+    #Garage
+    barriers[(110,111,94)] = cabbinet
+    barriers[(45,45,45)] = car
+    barriers[(184,219,221)] = outside
+    barriers[(71,69,68)] = garage door
 
 
     return (barriers, barriers_rect)
