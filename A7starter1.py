@@ -214,46 +214,14 @@ def main():
                     screen_y += speed
                 if keys[pygame.K_DOWN]:
                     screen_y += -speed
-                    
-            #print("Screen_X: ",screen_x,"Screen_y: ",screen_y)
-            # Clamp the screen offsets to allowable values
-     #       screen_x = clamp(0, screen_x, ((world.get_width() - 1) - (map_tile_width - 1)) * tile_size + tile_size-1)
-     #       screen_y = clamp(0, screen_y, ((world.get_height() - 1) - (map_tile_height - 1)) * tile_size + tile_size-1)
 
-            # scale down from position on the big map to pixel on the minimap
-            minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
-
-
-
-
-
-
-            
-            # The ghost moves across the map by adding 1 to the x coordinate. Since POSITION is a tuple, we
-            # cannot modify just the x coordinate, we need to rebuild the tuple.
-            character_data["ghost"][POSITION] = (character_data["ghost"][POSITION][0] + 1, character_data["ghost"][POSITION][1])
-            # The ghost rectangle has to be shifted from the big map to the screen by offsetting by the screen corner.
-            # This shifted rectangle is also how the hero might interact with the ghost since we care about
-            # where they are on screen relative to each other.
-            character_data["ghost"][RECT].center = (character_data["ghost"][POSITION][0] - screen_x, character_data["ghost"][POSITION][1] - screen_y)
-            if character_data["ghost"][VISIBLE]:
-                screen.blit(character_data["ghost"][IMAGE], character_data["ghost"][RECT])
-
-            # interact with ghost
-            if character_data["ghost"][VISIBLE] and hero_rect.colliderect(character_data["ghost"][RECT]):
-                character_data["ghost"][VISIBLE] = False;
-                say_phrases.append((character_data["ghost"][PHRASE], frame_count + 150))
-                game_state["got ghost"] = True # Not really used in the starter code
-
-            #print("before change: Hero_rect.x:",hero_rect[0], "  Hero_rect.y:",hero_rect[1])
-     #       hero_rect.center = (screen_x/2, screen_y/2)
-            #print("after change: Hero_rect.x:",hero_rect[0], "  Hero_rect.y:",hero_rect[1])
-            #print(hero_rect.center)
+            #This keeps pikachu in the middle
+            world_rect[0] = screen_x/2 - 900
+            world_rect[1] = screen_y/2 - 500
                
             # The hero stays in the center of the screen
             hero_sprite = hero[frame_count%len(hero)]
             if is_facing_right:
-                #print("is_facing_right")
                 hero_sprite = pygame.transform.flip(hero_sprite, True, False)
 
             fps = clock.get_fps()
@@ -267,10 +235,6 @@ def main():
             pygame.display.update()
 
             frame_count += 1
-            
-            #This keeps pikachu in the middle
-            world_rect[0] = screen_x/2 - 900
-            world_rect[1] = screen_y/2 - 500
             
             screen.fill((0,0,0))
             #Map 1
