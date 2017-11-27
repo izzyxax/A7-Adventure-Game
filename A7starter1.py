@@ -80,12 +80,12 @@ def main():
     # Store window width and height in different forms for easy access
     world_size = world.get_size()
     #print(world_size)
-    Wsize_x,Wsize_y = (world_size)
+    screen_x,screen_y = (world_size)
     
 
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
-    print(world_rect)
+    #print(world_rect)
     
     # create the window the same size as the map image
     screen = pygame.display.set_mode(world_size)
@@ -94,7 +94,6 @@ def main():
     map_tile_height = 20
     tile_size = 32
     screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
-    print(screen_size)
     
     # Get a font
     myfont = pygame.font.SysFont("monospace", 24)
@@ -113,9 +112,11 @@ def main():
     # Add All Characters
 
     #Safe
-    safe_image = pygame.image.load("Items/Safe.png").convert_alpha()
-    character_data["safe"] = {IMAGE:safe_image, RECT:safe_image.get_rect(), POSITION:(1000, 1000), VISIBLE:True, PHRASE:"Spend your coin wisely!"}
-   
+    safe_image = pygame.image.load("Items/Safe.png")
+    safe_rect = safe_image.get_rect()
+    safe_pos = (screen_x/2,screen_y/2)
+    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the key to the Front Door!"}
+    character_data["safe"] = safe
     
 
 
@@ -155,7 +156,7 @@ def main():
     game_state["Safe is open!"] = False
 
     # Define where the hero is positioned on the big map
-    screen_x, screen_y = (1200,1200)
+    #screen_x, screen_y = (1200,1200)
 
     
     
@@ -216,11 +217,11 @@ def main():
         # cannot modify just the x coordinate, we need to rebuild the tuple.
         
         #Safe
-        #character_data["safe"][POSITION] = (character_data["safe"][POSITION])
-        #character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
-
+        character_data["safe"][POSITION] = (character_data["safe"][POSITION][0], character_data["safe"][POSITION][1])
+        character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
         if character_data["safe"][VISIBLE]:
             screen.blit(character_data["safe"][IMAGE], character_data["safe"][RECT])
+
         # interact with ghost
         if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
             character_data["safe"][VISIBLE] = False;
