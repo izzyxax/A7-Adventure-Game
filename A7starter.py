@@ -53,10 +53,20 @@ barriers = {"wall": (158,158,158), "door": (77,58,52),"desk_chair": (99,99,99),"
             "fridge" :(168,167,165),"sink":(189,188,187),"table_chair_drawer":(64,57,51),"stool": (153,110,75), "Testing Wall":(184,158,136,225)}
 
 
+##def draw_characters(character_dict, screen, screen_x,screen_y,frame_count):
+##    for characters in character_dict:
+##        if characters["hero"]
+##        character = screen_x/2 - 900
+##        character = screen_y/2 - 500       
+##        screen.blit(hero[frame_number%len(hero)], hero_rect.center)
+##        if characters["safe"]
+##            if character_data["safe"][VISIBLE]:
+##            screen.blit(character_data["safe"][IMAGE], character_data["safe"][RECT])
+##        
+##    return
 
-
-
-
+def speed_from_terrain(hero_rect, world_map,screen_x,screen_y,tile_size):
+    return
 # The main loop handles most of the game    
 def main():
     
@@ -85,21 +95,21 @@ def main():
 
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
-<<<<<<< HEAD
     #print(world_rect)
 
-=======
+
     print(world_rect)
     
->>>>>>> 940078c106e3f86bca555860a11f9736cc850a11
     # create the window the same size as the map image
-    screen = pygame.display.set_mode(world_size)
+    screen = pygame.display.set_mode([500,500])
+ #   screen = pygame.display.set_mode(world_size)
 
     map_tile_width = 30
     map_tile_height = 20
     tile_size = 32
-    screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
-    print(screen_size)
+#    screen_size = width, height = (map_tile_width*tile_size, map_tile_height*tile_size)
+    screen_size = width, height = (500, 500)
+    #print(screen_size)
     
     # Get a font
     myfont = pygame.font.SysFont("monospace", 24)
@@ -108,11 +118,10 @@ def main():
     # We treat the hero differently than all the other sprite characters as it doesn't move
     hero = load_piskell_sprite("Items/Hero",12)
     hero_rect = hero[0].get_rect()
-    print(hero_rect)
+    #print(hero_rect)
     
     # Place the hero at the center of the screen
     hero_rect.center = (width/2, height/2)
-    print(screen_x/2, screen_y/2)
     #print(hero_rect.center)
 
     # Put all the characters in a dictionary so we can pass to functions easily
@@ -122,9 +131,11 @@ def main():
 
     #Safe
     safe_image = pygame.image.load("Items/Safe.png").convert_alpha()
-    character_data["safe"] = {IMAGE:safe_image, RECT:safe_image.get_rect(), POSITION:(1000, 1000), VISIBLE:True, PHRASE:"Spend your coin wisely!"}
+    character_data["safe"] = {IMAGE:safe_image, RECT:safe_image.get_rect(), POSITION:(1000, 1000), VISIBLE:True, PHRASE:"Spend your coins wisely!"}
    
-    
+    #key
+    safe_image = pygame.image.load("Items/Key.png").convert_alpha()
+    character_data["key"] = {IMAGE:hero, RECT:hero_rect, POSITION:(1000, 1000), VISIBLE:True, PHRASE:"You got the key!"}
 
 
     # This is our standard character data - it is a dictionary of
@@ -163,9 +174,8 @@ def main():
     game_state["Safe is open!"] = False
 
     # Define where the hero is positioned on the big map
-    #screen_x, screen_y = (1200,1200)
-
-    
+    screen_x, screen_y = (1800,900)
+    center_x, center_y = (screen_x-1035,screen_y-630)
     
     # Loop while the player is still active
     while playing:
@@ -175,50 +185,96 @@ def main():
                 playing = False
                 
         # Set the speed of the hero, which is the speed the screen corner moves.
-        speed = 1
-<<<<<<< HEAD
-        
-=======
+        speed = 5
 
->>>>>>> 940078c106e3f86bca555860a11f9736cc850a11
-        colliding = world.get_at(hero_rect.center)
+        #Suppose to get the color pixel the hero is on top of
+        colliding = world.get_at((center_x, center_y))
+#       colliding = hero_rect.get_at(world.center)
         #position = hero_rect.get_offset
         #print("world: ", world)
-        print("hero_rect.center: " , hero_rect.center)
-        #print("Color: ",colliding)
+        #print("hero_rect.center: " , hero_rect.center)
         #print("Pos: ",position)
-        
+        #moved = False
+
+        keys = pygame.key.get_pressed()
+
         #print(barriers)
-        for colors in barriers:
+        #for colors in barriers:
             #print(colors)
-            if colliding != barriers[colors]:
+#            if colliding != barriers[colors]:
             # Allow continuous motion on a held-down key
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_LEFT]:
-                    is_facing_right = False
-                    pass_check = True
-                    for colors in barriers:
-                        hero_x, hero_y = hero_rect.center
-                        if world.get_at((hero_x + speed, hero_y)) == barriers[colors]:
-                            print("pass_check False")
-                            pass_check = False
-                    if pass_check == True:
-                        screen_x += speed
-                if keys[pygame.K_RIGHT]:
-                    is_facing_right = True
-                    screen_x += -speed
-                if keys[pygame.K_UP]:
-                    screen_y += speed
-                if keys[pygame.K_DOWN]:
-                    screen_y += -speed
+        if keys[pygame.K_LEFT]:
+            moved = True                    
+            is_facing_right = False
+            pass_check = True
+            for colors in barriers:
+                if world.get_at((center_x-speed-5, center_y)) == barriers[colors]:
+                    print("pass_check False")
+                    pass_check = False
+            if pass_check == True:
+                screen_x += speed
+                center_x -= speed
+        if keys[pygame.K_RIGHT]:
+            moved = True                    
+            is_facing_right = True
+            pass_check = True
+            for colors in barriers:
+                if world.get_at((center_x+speed+5, center_y)) == barriers[colors]:
+                    print("pass_check False")
+                    pass_check = False
+            if pass_check == True:        
+                screen_x -= speed
+                center_x += speed
+        if keys[pygame.K_UP]:
+            moved = True
+            pass_check = True
+            for colors in barriers:
+                if world.get_at((center_x, center_y-speed-5)) == barriers[colors]:
+                    print("pass_check False")
+                    pass_check = False                    
+            if pass_check == True:
+                screen_y += speed
+                center_y -= speed
+        if keys[pygame.K_DOWN]:
+            moved = True
+            pass_check = True
+            for colors in barriers:
+                if world.get_at((center_x, center_y+speed+5)) == barriers[colors]:
+                    print("pass_check False")
+                    pass_check = False
+            if pass_check == True:
+               screen_y -= speed
+               center_y += speed
+                        
+        #if moved == True:                
+#            print("Colliding Color: ",colliding)
+            #print("Hero Color: ",world.get_at(hero_rect.center))
+            #print("screen x: ",screen_x)
+            #print("screen y: ",screen_y)
+            #print("world size: ",world.get_size())
+            #print("World Color: ",world.get_at((screen_x-1417,screen_y-450)))
+            #print("Hero Position: ", center_x, ", ", center_y)
+            #print("World Position: ", world_rect.center)
+        
+        
         #This keeps character in the middle
-        world_rect[0] = screen_x/2 - 900
-        world_rect[1] = screen_y/2 - 500
-               
+        world_rect[0] = screen_x - 2317
+        world_rect[1] = screen_y - 900
+                    
+        # scale down from position on the big map to pixel on the minimap
+        #minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
+                    
+        #Map 1
+ #       pygame.draw.circle(world, [255,0,0], [center_x, center_y],5)
+        screen.blit(world, world_rect)
         # The hero stays in the center of the screen
         hero_sprite = hero[frame_count%len(hero)]
         if is_facing_right:
             hero_sprite = pygame.transform.flip(hero_sprite, True, False)
+        screen.blit(hero_sprite, hero_rect)
+        
+ 
+
         
         fps = clock.get_fps()
         # Render text to the screen
@@ -236,9 +292,8 @@ def main():
         #character_data["safe"][POSITION] = (character_data["safe"][POSITION])
         #character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
 
-        if character_data["safe"][VISIBLE]:
-            screen.blit(character_data["safe"][IMAGE], character_data["safe"][RECT])
-        # interact with ghost
+
+        # interact with safe
         if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
             character_data["safe"][VISIBLE] = False;
             say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
@@ -251,12 +306,12 @@ def main():
         frame_count += 1
             
         screen.fill((0,0,0))
-        #Map 1
-        screen.blit(world, world_rect)
-        #print("last",world, world_rect)
-        screen.blit(hero[frame_number%len(hero)], hero_rect)
-        print("hero_rect.center: ", hero_rect.center)
-            
+
+        
+        #screen.blit(hero[frame_number%len(hero)], hero_rect.center)
+
+        #Where all the characters besides the hero(I think) are suppose to be drawn
+        #draw_characters(character_data,screen,screen_x,screen_y,frame_count)           
 
         # 60 fps
         clock.tick(60)
