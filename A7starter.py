@@ -132,15 +132,15 @@ def main():
     #Safe
     safe_image = pygame.image.load("Items/Safe.png").convert_alpha()
     safe_rect = safe_image.get_rect()
-    safe_pos = (500,500)
+    safe_pos = (-387,0)
     safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the front door"} 
     character_data["safe"] = safe
     #key
     key_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(screen_x, screen_y), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
+    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(-500,-80), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
     #key 2
     key2_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(500, 900), VISIBLE:True, PHRASE:"You got the key to the garage!"}
+    character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(300,300), VISIBLE:True, PHRASE:"You got the key to the garage!"}
     #key 3
     key3_image = pygame.image.load("Items/Key.png").convert_alpha()
     character_data["key3"] = {IMAGE:key3_image, RECT:key3_image.get_rect(), POSITION:(300, 900), VISIBLE:False, PHRASE:"You got the key to the front door!"}
@@ -271,6 +271,8 @@ def main():
         #This keeps character in the middle
         world_rect[0] = screen_x - 2317
         world_rect[1] = screen_y - 900
+        print(world_rect[0])
+        print(world_rect[1])
                     
         # scale down from position on the big map to pixel on the minimap
         #minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
