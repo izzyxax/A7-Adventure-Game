@@ -134,14 +134,23 @@ def main():
 
     #Safe
     safe_image = pygame.image.load("Items/Safe.png").convert_alpha()
-    character_data["safe"] = {IMAGE:safe_image, RECT:safe_image.get_rect(), POSITION:(1000, 1000), VISIBLE:True, PHRASE:"Spend your coins wisely!"}
-   
+    safe_rect = safe_image.get_rect()
+    safe_pos = (-387,0)
+    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the front door"} 
+    character_data["safe"] = safe
     #key
-    safe_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key"] = {IMAGE:hero, RECT:hero_rect, POSITION:(1000, 1000), VISIBLE:True, PHRASE:"You got the key!"}
+    key_image = pygame.image.load("Items/Key.png").convert_alpha()
+    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(-500,-80), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
+    #key 2
+    key2_image = pygame.image.load("Items/Key.png").convert_alpha()
+    character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(300,300), VISIBLE:True, PHRASE:"You got the key to the garage!"}
+    #key 3
+    key3_image = pygame.image.load("Items/Key.png").convert_alpha()
+    character_data["key3"] = {IMAGE:key3_image, RECT:key3_image.get_rect(), POSITION:(300, 900), VISIBLE:False, PHRASE:"You got the key to the front door!"}
 
 
-    # This is our standard character data - it is a dictionary of
+
+        # This is our standard character data - it is a dictionary of
     # an {IMAGE, RECT, POSITION, VISIBLE, optional PHRASE}. The ALL CAPS keys are defined at
     # the top of this file. They are really numbers. Words make more sense to read but I get
     # frustrated having to put quotes around the words. So the variables act as the word and the
@@ -173,8 +182,10 @@ def main():
     game_state = {}
     
     # Need to set all state variables here so that they are in the dictionary
-    game_state["got ghost"] = False
+    game_state["Got a key"] = False
+    game_state["Got a garage key"] = False
     game_state["Safe is open!"] = False
+    game_state["Got the front door key!"] = False
 
     # Define where the hero is positioned on the big map
     screen_x, screen_y = (1800,900)
@@ -253,13 +264,65 @@ def main():
         
         
         world_rect[0] = screen_x - 2317
+<<<<<<< HEAD
         world_rect[1] = screen_y - 900                   
+=======
+        world_rect[1] = screen_y - 900
+        print(world_rect[0])
+        print(world_rect[1])
+                    
+>>>>>>> 68204e8c9f871d1bc58f8c48ec57e4e658c3903c
         # scale down from position on the big map to pixel on the minimap
         #minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
                     
         #Map 1
  #       pygame.draw.circle(world, [255,0,0], [center_x, center_y],5)
         screen.blit(world, world_rect)
+        #Key 1:Bed Room
+        
+        character_data["key"][RECT].center = (character_data["key"][POSITION][0] - screen_x, character_data["key"][POSITION][1] - screen_y)
+        if character_data["key"][VISIBLE]:
+            screen.blit(character_data["key"][IMAGE], character_data["key"][RECT])
+        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
+            character_data["key"][VISIBLE] = False;
+            say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
+            game_state["Got a key"] = True # Not really used in the starter code
+
+        #Key2: Living Room
+        character_data["key2"][RECT].center = (character_data["key2"][POSITION][0] - screen_x, character_data["key2"][POSITION][1] - screen_y)
+        if character_data["key2"][VISIBLE]:
+            screen.blit(character_data["key2"][IMAGE], character_data["key2"][RECT])
+        if character_data["key2"][VISIBLE] and hero_rect.colliderect(character_data["key2"][RECT]):
+            character_data["key2"][VISIBLE] = False;
+            say_phrases.append((character_data["key2"][PHRASE], frame_count + 150))
+            game_state["Got a garage key"] = True # Not really used in the starter code
+
+
+        #Safe
+        
+        character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
+        if character_data["safe"][VISIBLE]:
+            screen.blit(character_data["safe"][IMAGE], character_data["safe"][RECT])
+
+        # interact with safe
+        if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
+            character_data["safe"][VISIBLE] = False;
+            character_data["key3"][VISIBLE] = True;
+            say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
+            game_state["Safe is open!"] = True # Not really used in the starter code
+
+        #Key 3: To the Front Door
+        character_data["key3"][RECT].center = (character_data["key3"][POSITION][0] - screen_x, character_data["key3"][POSITION][1] - screen_y)
+        if character_data["key3"][VISIBLE]:
+            screen.blit(character_data["key2"][IMAGE], character_data["key3"][RECT])
+        if character_data["key3"][VISIBLE] and hero_rect.colliderect(character_data["key3"][RECT]):
+            character_data["key3"][VISIBLE] = False;
+            say_phrases.append((character_data["key3"][PHRASE], frame_count + 150))
+            game_state["Got the front door key!"] = True # Not really used in the starter code
+
+
+
+
         # The hero stays in the center of the screen
         hero_sprite = hero[frame_count%len(hero)]
         if is_facing_right:
@@ -276,21 +339,6 @@ def main():
             
         render_phrases(say_phrases, frame_count, screen, myfont)
 
-
-        
-        # The ghost moves across the map by adding 1 to the x coordinate. Since POSITION is a tuple, we
-        # cannot modify just the x coordinate, we need to rebuild the tuple.
-        
-        #Safe
-        #character_data["safe"][POSITION] = (character_data["safe"][POSITION])
-        #character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
-
-
-        # interact with safe
-        if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
-            character_data["safe"][VISIBLE] = False;
-            say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
-            game_state["Safe is open!"] = True # Not really used in the starter code
 
         # Bring drawn changes to the front
         pygame.display.update()
