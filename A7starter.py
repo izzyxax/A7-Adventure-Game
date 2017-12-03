@@ -48,9 +48,12 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
             screen.blit(label, (screen.get_width()//2 - 100, phrase_position))
             phrase_position += 20
 
-barriers = {"wall": (158,158,158), "door": (77,58,52),"desk_chair": (99,99,99),"desk": (82,67,52),
-            "blanket": (33,54,69),"bed_frame": (130,109,88),"counter": (77,73,71),"can": (158,138,120),
-            "fridge" :(168,167,165),"sink":(189,188,187),"table_chair_drawer":(64,57,51),"stool": (153,110,75), "Testing Wall":(184,158,136,225)}
+barriers = {"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
+            "blanket": (33,54,69),"bed": (59,76,171),"bed1": (63,81,181),"bed2": (72,89,184),"bed3": (96,125,139),"bedFrame": (63,81,181),
+            "counter": (122,117,113),"can": (230,219,209),"Stove": (74,72,71),"Stove1": (160,48,48),
+            "fridge" :(209,208,207),"sink":(225,225,225),"table_chair_drawer":(186,160,139),"stool": (153,110,75), "Coffee Table":(199,184,171),
+            "Couch": (121,146,184),"Couch1": (144,169,186),"Blanket": (194,75,75),"blanket1": (199,116,120),
+            "cabnit": (147,148,129),"car": (174,174,174),"car1": (111,111,111),"Car3": (156,156,156),}
 
 
 ##def draw_characters(character_dict, screen, screen_x,screen_y,frame_count):
@@ -189,26 +192,17 @@ def main():
 
         #Suppose to get the color pixel the hero is on top of
         colliding = world.get_at((center_x, center_y))
-#       colliding = hero_rect.get_at(world.center)
-        #position = hero_rect.get_offset
-        #print("world: ", world)
-        #print("hero_rect.center: " , hero_rect.center)
-        #print("Pos: ",position)
+
         #moved = False
 
         keys = pygame.key.get_pressed()
-
-        #print(barriers)
-        #for colors in barriers:
-            #print(colors)
-#            if colliding != barriers[colors]:
-            # Allow continuous motion on a held-down key
+        # Allow continuous motion on a held-down key
         if keys[pygame.K_LEFT]:
             moved = True                    
             is_facing_right = False
             pass_check = True
             for colors in barriers:
-                if world.get_at((center_x-speed-5, center_y)) == barriers[colors]:
+                if world.get_at((center_x-speed-1, center_y)) == barriers[colors]:
                     print("pass_check False")
                     pass_check = False
             if pass_check == True:
@@ -219,7 +213,7 @@ def main():
             is_facing_right = True
             pass_check = True
             for colors in barriers:
-                if world.get_at((center_x+speed+5, center_y)) == barriers[colors]:
+                if world.get_at((center_x+speed+1, center_y)) == barriers[colors]:
                     print("pass_check False")
                     pass_check = False
             if pass_check == True:        
@@ -229,7 +223,7 @@ def main():
             moved = True
             pass_check = True
             for colors in barriers:
-                if world.get_at((center_x, center_y-speed-5)) == barriers[colors]:
+                if world.get_at((center_x, center_y-speed-1)) == barriers[colors]:
                     print("pass_check False")
                     pass_check = False                    
             if pass_check == True:
@@ -239,7 +233,7 @@ def main():
             moved = True
             pass_check = True
             for colors in barriers:
-                if world.get_at((center_x, center_y+speed+5)) == barriers[colors]:
+                if world.get_at((center_x, center_y+speed+1)) == barriers[colors]:
                     print("pass_check False")
                     pass_check = False
             if pass_check == True:
@@ -252,15 +246,14 @@ def main():
             #print("screen x: ",screen_x)
             #print("screen y: ",screen_y)
             #print("world size: ",world.get_size())
-            #print("World Color: ",world.get_at((screen_x-1417,screen_y-450)))
+            #print("World Color: ",world.get_at((center_x, center_y)))
             #print("Hero Position: ", center_x, ", ", center_y)
             #print("World Position: ", world_rect.center)
         
         
-        #This keeps character in the middle
+        
         world_rect[0] = screen_x - 2317
-        world_rect[1] = screen_y - 900
-                    
+        world_rect[1] = screen_y - 900                   
         # scale down from position on the big map to pixel on the minimap
         #minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
                     
@@ -307,8 +300,6 @@ def main():
             
         screen.fill((0,0,0))
 
-        
-        #screen.blit(hero[frame_number%len(hero)], hero_rect.center)
 
         #Where all the characters besides the hero(I think) are suppose to be drawn
         #draw_characters(character_data,screen,screen_x,screen_y,frame_count)           
