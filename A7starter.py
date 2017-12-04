@@ -77,9 +77,10 @@ barriers = {"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"des
 ##        
 ##    return
 
-def speed_from_terrain(hero_rect, world_map,screen_x,screen_y,tile_size):
-
-    
+def speed_from_terrain(hero_rect, world_map,center_x,center_y,tile_size):
+    for rug in rugs:
+        if world.get_at((center_x-speed-1, center_y)) == barriers[colors]:
+        center_x -= speed
     return
 # The main loop handles most of the game    
 def main():
@@ -233,7 +234,7 @@ def main():
                     pass_check = False
             if pass_check == True:
                 screen_x += speed
-                center_x -= speed
+                speed_from_terrain(hero_rect,world_map,screen_x,screen_y,tile_size) 
                 object_x += speed
         if keys[pygame.K_RIGHT]:
             moved = True                    
