@@ -292,16 +292,16 @@ def main():
 
         
         character_data["key"][RECT].center = (character_data["key"][POSITION][0]+object_x, character_data["key"][POSITION][1]+object_y)
-        print("Speed: ",speed)
-        print("Object Speed: ", speed)
-        print(character_data["key"][RECT].center)
+        #print("Speed: ",speed)
+        #print("Object Speed: ", speed)
+        #print(character_data["key"][RECT].center)
         #print(screen.blit(character_data["key"][IMAGE], character_data["key"][RECT]))
         if character_data["key"][VISIBLE]:
             screen.blit(character_data["key"][IMAGE], character_data["key"][RECT])
-##        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
-##            character_data["key"][VISIBLE] = False;
-##            say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
-##            game_state["Got a key"] = True # Not really used in the starter code
+        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
+            character_data["key"][VISIBLE] = False;
+            say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
+            game_state["Got a key"] = True # Not really used in the starter code
 
         #Key2: Living Room
         character_data["key2"][RECT].center = (character_data["key2"][POSITION][0]+object_x, character_data["key2"][POSITION][1] + object_y)
@@ -325,7 +325,7 @@ def main():
             say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
             game_state["Safe is open!"] = True # Not really used in the starter code
 
-<<<<<<< HEAD
+
         #Key 3: To the Front Door
         character_data["key3"][RECT].center = (character_data["key3"][POSITION][0] + object_x, character_data["key3"][POSITION][1] + object_y)
         if character_data["key3"][VISIBLE]:
@@ -334,9 +334,8 @@ def main():
             character_data["key3"][VISIBLE] = False;
             say_phrases.append((character_data["key3"][PHRASE], frame_count + 150))
             game_state["Got the front door key!"] = True # Not really used in the starter code
-=======
+
         
->>>>>>> 1c1c6c42b6e84a2b5aaa622d680e9a5eff4b1597
 
         #Win condition
         if character_data["safe"] == False:
@@ -348,8 +347,8 @@ def main():
                     playing = False
         
         
-        print(world_rect[0])
-        print(world_rect[1])
+        #print(world_rect[0])
+        #print(world_rect[1])
 
 
         # The hero stays in the center of the screen
