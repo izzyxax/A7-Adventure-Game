@@ -148,7 +148,7 @@ def main():
     character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(500,500), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
     #key 2
     key2_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(300,300), VISIBLE:True, PHRASE:"You got the key to the garage!"}
+    character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(300,300), VISIBLE:False, PHRASE:"You got the key to the garage!"}
     #key 3
     key3_image = pygame.image.load("Items/Key.png").convert_alpha()
     character_data["key3"] = {IMAGE:key3_image, RECT:key3_image.get_rect(), POSITION:(300, 900), VISIBLE:False, PHRASE:"You got the key to the front door!"}
@@ -285,22 +285,16 @@ def main():
         #Map 1
         #pygame.draw.circle(world, [255,0,0], [screen_x-1800, screen_y-900],5)
         screen.blit(world, world_rect)
-        
+        draw_characters=(character_data,screen,screen_x,screen_y,frame_count)
         #Key 1:Bed Room
-        character_data["key"][POSITION] = (character_data["key"][POSITION][0], character_data["key"][POSITION][1])
-
-
-        
+       
         character_data["key"][RECT].center = (character_data["key"][POSITION][0]-screen_x+1700, character_data["key"][POSITION][1]-screen_y+700)
-        print("Second: ",screen_x)
-        print(character_data["key"][RECT].center)
-        print(screen.blit(character_data["key"][IMAGE], character_data["key"][RECT]))
         if character_data["key"][VISIBLE]:
             screen.blit(character_data["key"][IMAGE], character_data["key"][RECT])
-##        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
-##            character_data["key"][VISIBLE] = False;
-##            say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
-##            game_state["Got a key"] = True # Not really used in the starter code
+        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
+            character_data["key"][VISIBLE] = False;
+            say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
+            game_state["Got a key"] = True # Not really used in the starter code
 
         #Key2: Living Room
         character_data["key2"][RECT].center = (character_data["key2"][POSITION][0]-screen_x+1500, character_data["key2"][POSITION][1] - screen_y+700)
@@ -365,7 +359,7 @@ def main():
 
 
         #Where all the characters besides the hero(I think) are suppose to be drawn
-        #draw_characters(character_data,screen,screen_x,screen_y,frame_count)           
+                   
 
         # 60 fps
         clock.tick(60)
