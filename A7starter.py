@@ -50,21 +50,26 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
 
 Garage_Door = (71,53,46)
 Kitchen_Door = (77,68,63)
+<<<<<<< HEAD
 Grass = (79,76,56)
 
 rugs = {"si1":(99,96,99), "si2" :(29,29,29),"si3" :(33,33,33),"si4" :(88,85,88),"Km1" :(68,42,42),"Km2":(125,77,77),"km3":(73,46,46),
          "km4":(138,94,94),  "km5":(92,68,68),"mat1":(203,109,109)}     
 barriers = {"BG":(0,0,0),"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
+=======
+win = (79,76,59)
+barriers = {"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
+>>>>>>> 01ae11afad6e215c89b2a5edf94b76019629b503
             "blanket": (33,54,69),"bed": (59,76,171),"bed1": (63,81,181),"bed2": (72,89,184),"bed3": (96,125,139),"bedFrame": (63,81,181),
             "counter": (122,117,113),"can": (230,219,209),"Stove": (74,72,71),"Stove1": (160,48,48),
             "fridge" :(209,208,207),"sink":(225,225,225),"table_chair_drawer":(186,160,139),"stool": (153,110,75), "Coffee Table":(199,184,171),
             "Couch": (121,146,184),"Couch1": (144,169,186),"Blanket": (194,75,75),"blanket1": (199,116,120),
             "cabnit": (147,148,129),"car": (174,174,174),"car1": (111,111,111),"Car3": (156,156,156),"Garage":Garage_Door, "Kitchen": Kitchen_Door}
-win = {"grass":Grass}
+#win = {"grass":Grass}
 
 
 
-print(End_Game)
+#print(End_Game)
 ##def draw_characters(character_dict, screen, screen_x,screen_y,frame_count):
 ##    for characters in character_dict:
 ##        if characters["hero"]
@@ -78,6 +83,8 @@ print(End_Game)
 ##    return
 
 def speed_from_terrain(hero_rect, world_map,screen_x,screen_y,tile_size):
+
+    
     return
 # The main loop handles most of the game    
 def main():
@@ -91,8 +98,8 @@ def main():
     
 
     #MUSIC
-    pygame.mixer.music.load("Fall.mp3")
-    pygame.mixer.music.play(-1)
+   # pygame.mixer.music.load("Fall.mp3")
+   # pygame.mixer.music.play(-1)
 
     
     # Load in the background image
@@ -201,7 +208,7 @@ def main():
    
     frame_number = 0
     
-    
+    print(win)
     # Loop while the player is still active
     while playing:
         # Check events by looping over the list of events
@@ -285,10 +292,7 @@ def main():
         
         world_rect[0] = screen_x - 2317
         world_rect[1] = screen_y - 900
-
-        # scale down from position on the big map to pixel on the minimap
-        #minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
-                    
+                   
         #Map 1
         #pygame.draw.circle(world, [255,0,0], [screen_x-1800, screen_y-900],5)
         screen.blit(world, world_rect)
@@ -332,30 +336,19 @@ def main():
         # interact with safe
         if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
             character_data["safe"][VISIBLE] = False;
-            if world.get_at((center_x-speed-1, center_y)) == win["grass"]:
-                pygame.quit()
-                sys.exit()
-                
-                
-                
                 #Insert Text "You Got Out"
-                
             say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
             game_state["Safe is open!"] = True # Not really used in the starter code
         
         
 
 
-
-
-        #Win conditions
-        #if character_data["key"] == False:
-        #if character_data["key2"] == False:
-            
         
-        #print(world_rect[0])
-        #print(world_rect[1])
 
+        if world.get_at((center_x-speed-1, center_y)) == win:
+            pygame.quit()
+            sys.exit()
+        #print(world.get_at((center_x-speed-1, center_y)))
 
         # The hero stays in the center of the screen
         hero_sprite = hero[frame_count%len(hero)]
