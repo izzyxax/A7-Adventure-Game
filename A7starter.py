@@ -47,15 +47,21 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
             label = myfont.render(say_phrases[index][0], True, (255,255,0))
             screen.blit(label, (screen.get_width()//2 - 100, phrase_position))
             phrase_position += 20
-
-barriers = {"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
+End_Game = (173,98,98)
+Garage_Door = (71,53,46)
+Kitchen_Door = (77,68,63)
+Grass = (79,76,56)
+barriers = {"BG":(0,0,0),"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
             "blanket": (33,54,69),"bed": (59,76,171),"bed1": (63,81,181),"bed2": (72,89,184),"bed3": (96,125,139),"bedFrame": (63,81,181),
             "counter": (122,117,113),"can": (230,219,209),"Stove": (74,72,71),"Stove1": (160,48,48),
             "fridge" :(209,208,207),"sink":(225,225,225),"table_chair_drawer":(186,160,139),"stool": (153,110,75), "Coffee Table":(199,184,171),
             "Couch": (121,146,184),"Couch1": (144,169,186),"Blanket": (194,75,75),"blanket1": (199,116,120),
-            "cabnit": (147,148,129),"car": (174,174,174),"car1": (111,111,111),"Car3": (156,156,156),}
+            "cabnit": (147,148,129),"car": (174,174,174),"car1": (111,111,111),"Car3": (156,156,156),"Garage":Garage_Door, "Kitchen": Kitchen_Door}
+win = {"grass":Grass}
 
 
+
+print(End_Game)
 ##def draw_characters(character_dict, screen, screen_x,screen_y,frame_count):
 ##    for characters in character_dict:
 ##        if characters["hero"]
@@ -82,8 +88,8 @@ def main():
     
 
     #MUSIC
-#    pygame.mixer.music.load("Stardew-Valley - Fall (Raven's Descent).mp3")
-#    pygame.mixer.music.play(-1)
+    pygame.mixer.music.load("Fall.mp3")
+    pygame.mixer.music.play(-1)
 
     
     # Load in the background image
@@ -141,18 +147,16 @@ def main():
     #Safe
     safe_image = pygame.image.load("Items/Safe.png").convert_alpha()
     safe_rect = safe_image.get_rect()
-    safe_pos = (-387,0)
-    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the front door key"} 
+    safe_pos = (400,900)
+    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got House Key!"} 
     character_data["safe"] = safe
     #key
     key_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(400,300), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
+    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(400,300), VISIBLE:True, PHRASE:"You got Kitchen key!"}
     #key 2
     key2_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(300,300), VISIBLE:True, PHRASE:"You got the key to the garage!"}
-    #key 3
-    key3_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key3"] = {IMAGE:key3_image, RECT:key3_image.get_rect(), POSITION:(300, 900), VISIBLE:False, PHRASE:"You got the key to the front door!"}
+    character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(-350,300), VISIBLE:True, PHRASE:"You got Garage key!"}
+  
 
 
 
@@ -191,10 +195,9 @@ def main():
     game_state["Got a key"] = False
     game_state["Got a garage key"] = False
     game_state["Safe is open!"] = False
-    game_state["Got the front door key!"] = False
-
+   
     frame_number = 0
-
+    
     
     # Loop while the player is still active
     while playing:
@@ -220,6 +223,7 @@ def main():
             frame_number +=1
             for colors in barriers:
                 if world.get_at((center_x-speed-1, center_y)) == barriers[colors]:
+                    
                     print("pass_check False")
                     pass_check = False
             if pass_check == True:
@@ -296,10 +300,12 @@ def main():
         #print("Object Speed: ", speed)
         #print(character_data["key"][RECT].center)
         #print(screen.blit(character_data["key"][IMAGE], character_data["key"][RECT]))
+
         if character_data["key"][VISIBLE]:
             screen.blit(character_data["key"][IMAGE], character_data["key"][RECT])
         if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
             character_data["key"][VISIBLE] = False;
+            barriers.pop("Kitchen")
             say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
             game_state["Got a key"] = True # Not really used in the starter code
 
@@ -309,6 +315,7 @@ def main():
             screen.blit(character_data["key2"][IMAGE], character_data["key2"][RECT])
         if character_data["key2"][VISIBLE] and hero_rect.colliderect(character_data["key2"][RECT]):
             character_data["key2"][VISIBLE] = False;
+            barriers.pop("Garage")
             say_phrases.append((character_data["key2"][PHRASE], frame_count + 150))
             game_state["Got a garage key"] = True # Not really used in the starter code
 
@@ -322,30 +329,26 @@ def main():
         # interact with safe
         if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
             character_data["safe"][VISIBLE] = False;
+            if world.get_at((center_x-speed-1, center_y)) == win["grass"]:
+                pygame.quit()
+                sys.exit()
+                
+                
+                
+                #Insert Text "You Got Out"
+                
             say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
             game_state["Safe is open!"] = True # Not really used in the starter code
-
-
-        #Key 3: To the Front Door
-        character_data["key3"][RECT].center = (character_data["key3"][POSITION][0] + object_x, character_data["key3"][POSITION][1] + object_y)
-        if character_data["key3"][VISIBLE]:
-            screen.blit(character_data["key2"][IMAGE], character_data["key3"][RECT])
-        if character_data["key3"][VISIBLE] and hero_rect.colliderect(character_data["key3"][RECT]):
-            character_data["key3"][VISIBLE] = False;
-            say_phrases.append((character_data["key3"][PHRASE], frame_count + 150))
-            game_state["Got the front door key!"] = True # Not really used in the starter code
-
+        
         
 
-        #Win condition
-        if character_data["safe"] == False:
-            if world_rect[0] == 188:
-                if world_rect[1] == range(-590,-690):
 
-                    #Insert font here
-                    time.sleep(15)
-                    playing = False
-        
+
+
+        #Win conditions
+        #if character_data["key"] == False:
+        #if character_data["key2"] == False:
+            
         
         #print(world_rect[0])
         #print(world_rect[1])
