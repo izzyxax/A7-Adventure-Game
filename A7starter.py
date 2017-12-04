@@ -47,10 +47,13 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
             label = myfont.render(say_phrases[index][0], True, (255,255,0))
             screen.blit(label, (screen.get_width()//2 - 100, phrase_position))
             phrase_position += 20
-End_Game = (173,98,98)
+
 Garage_Door = (71,53,46)
 Kitchen_Door = (77,68,63)
 Grass = (79,76,56)
+
+rugs = {"si1":(99,96,99), "si2" :(29,29,29),"si3" :(33,33,33),"si4" :(88,85,88),"Km1" :(68,42,42),"Km2":(125,77,77),"km3":(73,46,46),
+         "km4":(138,94,94),  "km5":(92,68,68),"mat1":(203,109,109)}     
 barriers = {"BG":(0,0,0),"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
             "blanket": (33,54,69),"bed": (59,76,171),"bed1": (63,81,181),"bed2": (72,89,184),"bed3": (96,125,139),"bedFrame": (63,81,181),
             "counter": (122,117,113),"can": (230,219,209),"Stove": (74,72,71),"Stove1": (160,48,48),
