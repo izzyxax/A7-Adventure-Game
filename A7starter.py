@@ -50,22 +50,17 @@ def render_phrases( say_phrases, frame_count, screen, myfont):
 
 Garage_Door = (71,53,46)
 Kitchen_Door = (77,68,63)
-<<<<<<< HEAD
-Grass = (79,76,56)
+win = (79,76,59)
 
 rugs = {"si1":(99,96,99), "si2" :(29,29,29),"si3" :(33,33,33),"si4" :(88,85,88),"Km1" :(68,42,42),"Km2":(125,77,77),"km3":(73,46,46),
          "km4":(138,94,94),  "km5":(92,68,68),"mat1":(203,109,109)}     
-barriers = {"BG":(0,0,0),"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
-=======
-win = (79,76,59)
+
 barriers = {"wall": (158,158,158), "door": (77,58,52),"desk": (167,147,127),"desk1": (150,132,114),"computer": (158,139,139),
->>>>>>> 01ae11afad6e215c89b2a5edf94b76019629b503
             "blanket": (33,54,69),"bed": (59,76,171),"bed1": (63,81,181),"bed2": (72,89,184),"bed3": (96,125,139),"bedFrame": (63,81,181),
-            "counter": (122,117,113),"can": (230,219,209),"Stove": (74,72,71),"Stove1": (160,48,48),
-            "fridge" :(209,208,207),"sink":(225,225,225),"table_chair_drawer":(186,160,139),"stool": (153,110,75), "Coffee Table":(199,184,171),
-            "Couch": (121,146,184),"Couch1": (144,169,186),"Blanket": (194,75,75),"blanket1": (199,116,120),
-            "cabnit": (147,148,129),"car": (174,174,174),"car1": (111,111,111),"Car3": (156,156,156),"Garage":Garage_Door, "Kitchen": Kitchen_Door}
-#win = {"grass":Grass}
+            "counter": (122,117,113),"can": (230,219,209),"Stove": (74,72,71),"Stove1": (160,48,48), "Stove2":(30,29,29),"Stove3":(178,174,171),
+            "fridge" :(209,208,207),"sink":(255,255,255),"table_chair_drawer":(186,160,139),"stool": (153,110,75), "Coffee Table":(199,184,171),"Couch3":(121,146,163),
+            "Couch": (121,146,184),"Couch1": (144,169,186),"Blanket": (194,75,75),"blanket1": (199,116,120), "wall2":(107,96,96),"water":(178,236,255),
+            "cabnit": (147,148,129),"car": (174,174,174),"car1": (111,111,111),"Car3": (156,156,156),"Garage":Garage_Door, "Kitchen": Kitchen_Door, "endDoor":(171,165,161)}
 
 
 
@@ -336,6 +331,7 @@ def main():
         # interact with safe
         if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
             character_data["safe"][VISIBLE] = False;
+            barriers.pop("endDoor")
                 #Insert Text "You Got Out"
             say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
             game_state["Safe is open!"] = True # Not really used in the starter code
