@@ -129,7 +129,8 @@ def main():
     # Place the hero at the center of the screen
     hero_rect.center = (width/2, height/2)
     #print(hero_rect.center)
-
+    mini_map = pygame.image.load("Rooms/minimap.png").convert_alpha()
+    
     # Put all the characters in a dictionary so we can pass to functions easily
     character_data = {}
 
@@ -180,7 +181,7 @@ def main():
 
     # variable to show which way I am moving
     is_facing_right = True # False means left
-    is_faceing_up = True #False means down
+    
     
     # capture ghost variable
     game_state = {}
@@ -190,6 +191,15 @@ def main():
     game_state["Got a garage key"] = False
     game_state["Safe is open!"] = False
     game_state["Got the front door key!"] = False
+<<<<<<< HEAD
+=======
+
+    # Define where the hero is positioned on the big map
+    screen_x, screen_y = (1800,900)
+    center_x, center_y = (screen_x-1035,screen_y-630)
+
+    frame_number = 0
+>>>>>>> 2efd25414727254b5a4178d03114f6ef78dda11f
     
     # Loop while the player is still active
     while playing:
@@ -212,6 +222,7 @@ def main():
             moved = True                    
             is_facing_right = False
             pass_check = True
+            frame_number +=1
             for colors in barriers:
                 if world.get_at((center_x-speed-1, center_y)) == barriers[colors]:
                     print("pass_check False")
@@ -224,6 +235,7 @@ def main():
             moved = True                    
             is_facing_right = True
             pass_check = True
+            frame_number +=1
             for colors in barriers:
                 if world.get_at((center_x+speed+1, center_y)) == barriers[colors]:
                     print("pass_check False")
@@ -234,6 +246,7 @@ def main():
         if keys[pygame.K_UP]:
             moved = True
             pass_check = True
+            frame_number +=1
             for colors in barriers:
                 if world.get_at((center_x, center_y-speed-1)) == barriers[colors]:
                     print("pass_check False")
@@ -244,6 +257,7 @@ def main():
         if keys[pygame.K_DOWN]:
             moved = True
             pass_check = True
+            frame_number +=1
             for colors in barriers:
                 if world.get_at((center_x, center_y+speed+1)) == barriers[colors]:
                     print("pass_check False")
@@ -266,7 +280,11 @@ def main():
         
         world_rect[0] = screen_x - 2317
         world_rect[1] = screen_y - 900
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 2efd25414727254b5a4178d03114f6ef78dda11f
         # scale down from position on the big map to pixel on the minimap
         #minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
                     
@@ -331,7 +349,8 @@ def main():
             hero_sprite = pygame.transform.flip(hero_sprite, True, False)
         screen.blit(hero_sprite, hero_rect)
         
- 
+        
+        screen.blit(mini_map,(300,1))
 
         
         fps = clock.get_fps()
