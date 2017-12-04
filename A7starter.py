@@ -105,7 +105,7 @@ def main():
     #print(world_rect)
 
 
-    print(world_rect)
+    #print(world_rect)
     
     # create the window the same size as the map image
     screen = pygame.display.set_mode([500,500])
@@ -146,7 +146,7 @@ def main():
     character_data["safe"] = safe
     #key
     key_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(500,500), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
+    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(400,300), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
     #key 2
     key2_image = pygame.image.load("Items/Key.png").convert_alpha()
     character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(300,300), VISIBLE:True, PHRASE:"You got the key to the garage!"}
@@ -226,7 +226,6 @@ def main():
                 screen_x += speed
                 center_x -= speed
                 object_x += speed
-                print(screen_x)
         if keys[pygame.K_RIGHT]:
             moved = True                    
             is_facing_right = True
@@ -292,10 +291,11 @@ def main():
 
 
         
-        character_data["key"][RECT].center = (character_data["key"][POSITION][0]-screen_x+1700, character_data["key"][POSITION][1]-screen_y+700)
-        print("Second: ",screen_x)
+        character_data["key"][RECT].center = (character_data["key"][POSITION][0]+object_x, character_data["key"][POSITION][1]+object_y)
+        print("Speed: ",speed)
+        print("Object Speed: ", speed)
         print(character_data["key"][RECT].center)
-        print(screen.blit(character_data["key"][IMAGE], character_data["key"][RECT]))
+        #print(screen.blit(character_data["key"][IMAGE], character_data["key"][RECT]))
         if character_data["key"][VISIBLE]:
             screen.blit(character_data["key"][IMAGE], character_data["key"][RECT])
 ##        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
@@ -304,7 +304,7 @@ def main():
 ##            game_state["Got a key"] = True # Not really used in the starter code
 
         #Key2: Living Room
-        character_data["key2"][RECT].center = (character_data["key2"][POSITION][0]-screen_x+1500, character_data["key2"][POSITION][1] - screen_y+700)
+        character_data["key2"][RECT].center = (character_data["key2"][POSITION][0]+object_x, character_data["key2"][POSITION][1] + object_y)
         if character_data["key2"][VISIBLE]:
             screen.blit(character_data["key2"][IMAGE], character_data["key2"][RECT])
         if character_data["key2"][VISIBLE] and hero_rect.colliderect(character_data["key2"][RECT]):
@@ -315,7 +315,7 @@ def main():
 
         #Safe
         
-        character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] - screen_x, character_data["safe"][POSITION][1] - screen_y)
+        character_data["safe"][RECT].center = (character_data["safe"][POSITION][0] + object_x, character_data["safe"][POSITION][1] + object_y)
         if character_data["safe"][VISIBLE]:
             screen.blit(character_data["safe"][IMAGE], character_data["safe"][RECT])
 
@@ -327,7 +327,7 @@ def main():
             game_state["Safe is open!"] = True # Not really used in the starter code
 
         #Key 3: To the Front Door
-        character_data["key3"][RECT].center = (character_data["key3"][POSITION][0] - screen_x, character_data["key3"][POSITION][1] - screen_y)
+        character_data["key3"][RECT].center = (character_data["key3"][POSITION][0] + object_x, character_data["key3"][POSITION][1] + object_y)
         if character_data["key3"][VISIBLE]:
             screen.blit(character_data["key2"][IMAGE], character_data["key3"][RECT])
         if character_data["key3"][VISIBLE] and hero_rect.colliderect(character_data["key3"][RECT]):
