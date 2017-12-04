@@ -95,7 +95,10 @@ def main():
     #print(world_size)
     screen_x,screen_y = (world_size)
     
-
+    # Define where the hero is positioned on the big map
+    screen_x, screen_y = (1800,900)
+    center_x, center_y = (screen_x-1035,screen_y-630)
+    
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
     #print(world_rect)
@@ -104,7 +107,7 @@ def main():
     print(world_rect)
     
     # create the window the same size as the map image
-    screen = pygame.display.set_mode([500,500])
+    screen = pygame.display.set_mode([1500,1500])
  #   screen = pygame.display.set_mode(world_size)
 
     map_tile_width = 30
@@ -130,6 +133,7 @@ def main():
     # Put all the characters in a dictionary so we can pass to functions easily
     character_data = {}
 
+
     # Add All Characters
 
     #Safe
@@ -140,7 +144,7 @@ def main():
     character_data["safe"] = safe
     #key
     key_image = pygame.image.load("Items/Key.png").convert_alpha()
-    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(-500,-80), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
+    character_data["key"] = {IMAGE:key_image, RECT:key_image.get_rect(), POSITION:(1900,900), VISIBLE:True, PHRASE:"You got the key to the kitchen and living room!"}
     #key 2
     key2_image = pygame.image.load("Items/Key.png").convert_alpha()
     character_data["key2"] = {IMAGE:key2_image, RECT:key2_image.get_rect(), POSITION:(300,300), VISIBLE:True, PHRASE:"You got the key to the garage!"}
@@ -186,10 +190,6 @@ def main():
     game_state["Got a garage key"] = False
     game_state["Safe is open!"] = False
     game_state["Got the front door key!"] = False
-
-    # Define where the hero is positioned on the big map
-    screen_x, screen_y = (1800,900)
-    center_x, center_y = (screen_x-1035,screen_y-630)
     
     # Loop while the player is still active
     while playing:
@@ -219,6 +219,7 @@ def main():
             if pass_check == True:
                 screen_x += speed
                 center_x -= speed
+                print(screen_x)
         if keys[pygame.K_RIGHT]:
             moved = True                    
             is_facing_right = True
@@ -264,32 +265,33 @@ def main():
         
         
         world_rect[0] = screen_x - 2317
-<<<<<<< HEAD
-        world_rect[1] = screen_y - 900                   
-=======
         world_rect[1] = screen_y - 900
-        print(world_rect[0])
-        print(world_rect[1])
-                    
->>>>>>> 68204e8c9f871d1bc58f8c48ec57e4e658c3903c
+
         # scale down from position on the big map to pixel on the minimap
         #minimap_offset_x, minimap_offset_y =  map_position_to_minimap_index( (screen_x, screen_y), tile_size)
                     
         #Map 1
- #       pygame.draw.circle(world, [255,0,0], [center_x, center_y],5)
+        #pygame.draw.circle(world, [255,0,0], [screen_x-1800, screen_y-900],5)
         screen.blit(world, world_rect)
-        #Key 1:Bed Room
         
-        character_data["key"][RECT].center = (character_data["key"][POSITION][0] - screen_x, character_data["key"][POSITION][1] - screen_y)
+        #Key 1:Bed Room
+        #character_data["key"][POSITION] = (character_data["key"][POSITION][0], character_data["key"][POSITION][1])
+
+
+        
+        character_data["key"][RECT].center = (character_data["key"][POSITION][0], character_data["key"][POSITION][1])
+        print("Second: ",screen_x)
+        print(character_data["key"][RECT].center)
+        print(screen.blit(character_data["key"][IMAGE], character_data["key"][RECT]))
         if character_data["key"][VISIBLE]:
             screen.blit(character_data["key"][IMAGE], character_data["key"][RECT])
-        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
-            character_data["key"][VISIBLE] = False;
-            say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
-            game_state["Got a key"] = True # Not really used in the starter code
+##        if character_data["key"][VISIBLE] and hero_rect.colliderect(character_data["key"][RECT]):
+##            character_data["key"][VISIBLE] = False;
+##            say_phrases.append((character_data["key"][PHRASE], frame_count + 150))
+##            game_state["Got a key"] = True # Not really used in the starter code
 
         #Key2: Living Room
-        character_data["key2"][RECT].center = (character_data["key2"][POSITION][0] - screen_x, character_data["key2"][POSITION][1] - screen_y)
+        character_data["key2"][RECT].center = (character_data["key2"][POSITION][0]-screen_x, character_data["key2"][POSITION][1] - screen_y)
         if character_data["key2"][VISIBLE]:
             screen.blit(character_data["key2"][IMAGE], character_data["key2"][RECT])
         if character_data["key2"][VISIBLE] and hero_rect.colliderect(character_data["key2"][RECT]):
