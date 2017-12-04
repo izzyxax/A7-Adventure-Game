@@ -98,6 +98,7 @@ def main():
     # Define where the hero is positioned on the big map
     screen_x, screen_y = (1800,900)
     center_x, center_y = (screen_x-1035,screen_y-630)
+    object_x, object_y = (0,0)
     
     # The map rect is basically the whole screen, and we will draw to it to fill the background with the image
     world_rect = world.get_rect()
@@ -107,7 +108,7 @@ def main():
     print(world_rect)
     
     # create the window the same size as the map image
-    screen = pygame.display.set_mode([1500,1500])
+    screen = pygame.display.set_mode([500,500])
  #   screen = pygame.display.set_mode(world_size)
 
     map_tile_width = 30
@@ -192,10 +193,6 @@ def main():
     game_state["Safe is open!"] = False
     game_state["Got the front door key!"] = False
 
-    # Define where the hero is positioned on the big map
-    screen_x, screen_y = (1800,900)
-    center_x, center_y = (screen_x-1035,screen_y-630)
-
     frame_number = 0
 
     
@@ -228,6 +225,7 @@ def main():
             if pass_check == True:
                 screen_x += speed
                 center_x -= speed
+                object_x += speed
                 print(screen_x)
         if keys[pygame.K_RIGHT]:
             moved = True                    
@@ -241,6 +239,7 @@ def main():
             if pass_check == True:        
                 screen_x -= speed
                 center_x += speed
+                object_x -= speed
         if keys[pygame.K_UP]:
             moved = True
             pass_check = True
@@ -252,6 +251,7 @@ def main():
             if pass_check == True:
                 screen_y += speed
                 center_y -= speed
+                object_y += speed
         if keys[pygame.K_DOWN]:
             moved = True
             pass_check = True
@@ -263,6 +263,7 @@ def main():
             if pass_check == True:
                screen_y -= speed
                center_y += speed
+               object_y -= speed
                         
         #if moved == True:                
 #            print("Colliding Color: ",colliding)
