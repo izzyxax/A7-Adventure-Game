@@ -2,7 +2,7 @@
 # University of Utah, David Johnson, 2017.
 # This code, or code derived from this code, may not be shared without permission.
 
-import sys, pygame, math
+import sys, pygame, math, time
 
 # Define some words to act as a key into a dictionary of character-related data. I could
 # use "image" as a key, but sometimes it is nice to avoid "".
@@ -142,7 +142,7 @@ def main():
     safe_image = pygame.image.load("Items/Safe.png").convert_alpha()
     safe_rect = safe_image.get_rect()
     safe_pos = (-387,0)
-    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the front door"} 
+    safe = {IMAGE:safe_image, RECT:safe_rect, POSITION:safe_pos, VISIBLE:True, PHRASE:"You got the front door key"} 
     character_data["safe"] = safe
     #key
     key_image = pygame.image.load("Items/Key.png").convert_alpha()
@@ -316,20 +316,23 @@ def main():
         # interact with safe
         if character_data["safe"][VISIBLE] and hero_rect.colliderect(character_data["safe"][RECT]):
             character_data["safe"][VISIBLE] = False;
-            character_data["key3"][VISIBLE] = True;
             say_phrases.append((character_data["safe"][PHRASE], frame_count + 150))
             game_state["Safe is open!"] = True # Not really used in the starter code
 
-        #Key 3: To the Front Door
-        character_data["key3"][RECT].center = (character_data["key3"][POSITION][0] - screen_x, character_data["key3"][POSITION][1] - screen_y)
-        if character_data["key3"][VISIBLE]:
-            screen.blit(character_data["key2"][IMAGE], character_data["key3"][RECT])
-        if character_data["key3"][VISIBLE] and hero_rect.colliderect(character_data["key3"][RECT]):
-            character_data["key3"][VISIBLE] = False;
-            say_phrases.append((character_data["key3"][PHRASE], frame_count + 150))
-            game_state["Got the front door key!"] = True # Not really used in the starter code
+        
 
+        #Win condition
+        if character_data["safe"] == False:
+            if world_rect[0] == 188:
+                if world_rect[1] == range(-590,-690):
 
+                    #Insert font here
+                    time.sleep(15)
+                    playing = False
+        
+        
+        print(world_rect[0])
+        print(world_rect[1])
 
 
         # The hero stays in the center of the screen
